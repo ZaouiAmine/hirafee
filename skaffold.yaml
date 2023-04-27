@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: zaouiamine/auth
+      # the folder that contains the src code for the image
+      context: auth
+      # docker file to use
+      docker:
+        dockerfile: Dockerfile
+      # how to handle any files that change inside here
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
