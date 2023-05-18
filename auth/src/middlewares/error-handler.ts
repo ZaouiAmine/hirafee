@@ -3,6 +3,7 @@ import { RequestValidationError } from "../errors/request-validation-error";
 import { DatabaseConnectionError } from "../errors/database-connection-error";
 import { NotFoundError } from "../errors/not-found-error";
 import { BadRequestError } from "../errors/bad-request-error";
+import { NotAuthorizedError } from "../errors/not-authorized-error";
 
 export const errorHandler = (
   err: Error,
@@ -20,6 +21,9 @@ export const errorHandler = (
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
   }
   if (err instanceof BadRequestError) {
+    return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+  }
+  if (err instanceof NotAuthorizedError) {
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
   }
 
