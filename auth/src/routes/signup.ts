@@ -52,7 +52,7 @@ router.post(
     };
     res.status(201).send(user);
 
-    console.log("user created");
+    // console.log("user created");
   }
 );
 
