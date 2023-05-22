@@ -17,6 +17,13 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          - path: /api/profiles/?(.*)
+            pathType: Prefix # Specify the pathType as Prefix
+            backend:
+              service:
+                name: profile-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix # Specify the pathType as Prefix
             backend:
