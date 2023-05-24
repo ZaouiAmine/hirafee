@@ -10,8 +10,6 @@ it ('has a route handler listning to /api/gigs for post requets ',async ( ) =>{
     .post('/api/gigs')
     .send({});
     expect (response.status).not.toEqual(404);
-
-
 });
 
 
@@ -23,10 +21,6 @@ it ('can only be accessed by a signed client',async ( ) =>{
 });
 
 
-
-it ('creates a gig successfully with valid inputs ',async ( ) =>{
-
-});
 
 
 
