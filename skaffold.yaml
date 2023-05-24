@@ -41,3 +41,14 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: malakboudaa/gigs
+      # the folder that contains the src code for the image
+      context: gigs
+      # docker file to use
+      docker:
+        dockerfile: Dockerfile
+      # how to handle any files that change inside here
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
