@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-depl
+  name: gigs-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth
+      app: gigs
   template:
     metadata:
       labels:
-        app: auth
+        app: gigs
     spec:
       containers:
-        - name: auth
-          image: zaouiamine/auth
+        - name: gigs
+          image: malakboudaa/gigs
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://gigs-mongo-srv:27017/gigs'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -27,12 +27,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-srv
+  name: gigs-srv
 spec:
   selector:
-    app: auth
+    app: gigs
   ports:
-    - name: auth
+    - name: gigs
       protocol: TCP
       port: 3000
       targetPort: 3000
