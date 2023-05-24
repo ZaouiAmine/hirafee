@@ -19,6 +19,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+      # -----------------------------------------------
     - image: zaouiamine/client
       # the folder that contains the src code for the image
       context: client
@@ -30,6 +31,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+      # -----------------------------------------------
     - image: zaouiamine/profile
       # the folder that contains the src code for the image
       context: profile
@@ -41,6 +43,7 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+      # -----------------------------------------------
     - image: malakboudaa/gigs
       # the folder that contains the src code for the image
       context: gigs
