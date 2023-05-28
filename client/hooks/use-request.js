@@ -11,18 +11,20 @@ export default ({ url, method, body, onSuccess }) => {
       if (onSuccess) {
         onSuccess(response.data);
       }
+      console.log("in do request try");
       return response.data;
     } catch (err) {
       setErrors(
         <div className="alert alert-danger mb-3">
           <h4>Ooops ....</h4>
           <ul>
-            {err.response.data.errors.map((err) => (
+            {err.response?.data?.errors?.map((err) => (
               <li key={err.message}>{err.message}</li>
             ))}
           </ul>
         </div>
       );
+      console.log("in do request catch");
     }
   };
 

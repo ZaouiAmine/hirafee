@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Link from "next/link";
+
 import Router from "next/router";
 import useRequest from "../../hooks/use-request";
 
@@ -47,9 +47,6 @@ export default () => {
           />
           <div>
             <button className="btn btn-primary mb-3 mx-1">Sign Up</button>
-            <Link href="/auth/signin">
-              <button className="btn btn-primary mb-3">Sign In</button>
-            </Link>
           </div>
           {errors}
         </div>

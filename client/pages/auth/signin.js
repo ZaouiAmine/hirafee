@@ -1,32 +1,24 @@
 import { useState } from "react";
-import Link from "next/link";
-import axios from "axios";
+import Router from "next/router";
+import useRequest from "../../hooks/use-request";
 
 export default () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [statusCode, setStatusCode] = useState(null);
+
+  const { doRequest, errors } = useRequest({
+    url: "/api/users/signin",
+    method: "post",
+    body: {
+      email,
+      password,
+    },
+    onSuccess: () => Router.push("/"),
+  });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("/api/users/signin", {
-        email,
-        password,
-      })
-      .then(function (response) {
-        if (response.status == 200) {
-          setStatusCode(200);
-        }
-      })
-      .catch(function (error) {
-        if (error.response.status == 400) {
-          setStatusCode(400);
-        }
-        console.log(error);
-        setErrors(error.response.data.errors);
-      });
+    doRequest();
   };
 
   return (
@@ -53,25 +45,8 @@ export default () => {
           />
           <div>
             <button className="btn btn-primary mb-3 mx-1">Sign In</button>
-            <Link href="/auth/signup">
-              <button className="btn btn-primary mb-3">Sign Up</button>
-            </Link>
           </div>
-          {errors.length > 0 && (
-            <div className="alert alert-danger mb-3 mx-1">
-              <h4>Ooops ....</h4>
-              <ul>
-                {errors.map((err) => (
-                  <li key={err.message}>{err.message}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {statusCode == 200 && (
-            <div className="alert alert-success mb-3 mx-1">
-              <h4>SignIn successful</h4>
-            </div>
-          )}
+          {errors}
         </div>
       </form>
     </div>
