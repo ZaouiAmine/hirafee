@@ -6,8 +6,11 @@ const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("env key not defined");
   }
+  if (!process.env.MONGO_URI) {
+    throw new Error("env key not defined");
+  }
   try {
-    mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+    mongoose.connect(process.env.MONGO_URI);
     console.log("connected to db");
   } catch (error) {
     console.error(error);

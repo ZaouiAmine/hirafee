@@ -1,35 +1,48 @@
- import {MongoMemoryServer} from 'mongodb-memory-server';
- import mongoose from 'mongoose';
- import {app} from '../app';
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
-let mongo : any;
- // A hook that will run before all our test 
- beforeAll(async () =>{
-   mongo = new MongoMemoryServer()
-   await mongo.start()
-   
-   const uri = await mongo.getUri()
+declare global {
+  function signin(): string[];
+}
 
-    await mongoose.connect(uri, {
+let mongo: any;
 
-    });
- });
+beforeAll(async () => {
+  process.env.JWT_KEY = "asdfsdfsf";
+  mongo = await MongoMemoryServer.create();
+  const mongoUri = await mongo.getUri();
 
- //another hook that will run berfore each test
+  await mongoose.connect(mongoUri);
+});
 
- beforeEach(async () => {
-    // its going to reset all our data before the test 
-    // reach the mongodb and delete and reset all the data 
-    const collections = await mongoose.connection.db.collections();
-    for (let collection of collections){
-        await collection.deleteMany({});
-    }
- });
+beforeEach(async () => {
+  const collections = await mongoose.connection.db.collections();
 
- // another hook that's gonna run after all our completed tests
- afterAll (async () => {
-    // stop mongodbmemoryserver
-    // mongo disconnect 
-    await mongo.stop();
-    await mongoose.connection.close();
- })
+  for (let collection of collections) {
+    await collection.deleteMany({});
+  }
+});
+
+afterAll(async () => {
+  await mongo.stop();
+  await mongoose.connection.close();
+});
+
+global.signin = () => {
+  // build a jwt payload
+  const payload = {
+    id: "fjdlmsqjfd",
+    email: "test@test.com",
+  };
+  // create the jsonwebtoken
+  const token = jwt.sign(payload, process.env.JWT_KEY!);
+  // build the session object
+  const session = { jwt: token };
+  // turn that session to json
+  const sessionJSON = JSON.stringify(session);
+  // encode json as base 64
+  const base64 = Buffer.from(sessionJSON).toString("base64");
+  // return a string  cookie with encodded data
+  return [`session=${base64}`];
+};

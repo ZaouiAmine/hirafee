@@ -1,42 +1,85 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-// An interface that describes the properties
-// that are requried to create a new User
 interface ProfileAttrs {
-  email: string;
-  password: string;
+  name: string;
+  phoneNumber: string;
+  location: string;
+  portfolio: Array<PortfolioItem>;
+  user: string;
+  biography: string;
 }
 
-// An interface that describes the properties
-// that a User Model has
 interface ProfileModel extends mongoose.Model<ProfileDoc> {
   build(attrs: ProfileAttrs): ProfileDoc;
 }
 
-// An interface that describes the properties
-// that a User Document has
-//here we can add some othr properties that mongo can generate automatically for us 
-//such as UdatedAt or CreatedAt
 interface ProfileDoc extends mongoose.Document {
-  email: string;
-  password: string;
+  name: string;
+  phoneNumber: string;
+  location: string;
+  portfolio: Array<PortfolioItem>;
+  user: string;
+  biography: string;
 }
 
-const profileSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true
+interface PortfolioItem {
+  image: string;
+  description: string;
+}
+
+const profileSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    portfolio: [
+      {
+        image: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    user: {
+      type: String,
+      required: true,
+    },
+    biography: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      },
+    },
   }
-});
+);
 
 profileSchema.statics.build = (attrs: ProfileAttrs) => {
   return new Profile(attrs);
 };
 
-const Profile = mongoose.model<ProfileDoc, ProfileModel>('Profile', profileSchema);
+const Profile = mongoose.model<ProfileDoc, ProfileModel>(
+  "Profile",
+  profileSchema
+);
 
 export { Profile };

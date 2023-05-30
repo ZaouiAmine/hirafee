@@ -3,8 +3,8 @@ import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import { User } from "../models/user";
-import { validateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
+import { validateRequest } from "@hirafee-platforme/common";
+import { BadRequestError } from "@hirafee-platforme/common";
 import { Password } from "../services/password";
 
 const router = express.Router();
