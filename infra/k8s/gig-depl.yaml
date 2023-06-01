@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gig-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gig
+  template:
+    metadata:
+      labels:
+        app: gig
+    spec:
+      containers:
+        - name: gig
+          image: zaouiamine/gig
+          env:
+            - name: MONGO_URI
+              value: "mongodb://gig-mongo-srv:27017/gig"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gig-srv
+spec:
+  selector:
+    app: gig
+  ports:
+    - name: gig
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
