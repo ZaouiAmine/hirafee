@@ -8,6 +8,10 @@ import {
   NotFoundError,
 } from "@hirafee-platforme/common";
 import { createProfileRouter } from "./routes/create";
+import { readProfileRouter } from "./routes/read";
+import { readAllProfilesRouter } from "./routes/readAll";
+import { updateProfileRouter } from "./routes/update";
+import { deleteProfileRouter } from "./routes/delete";
 
 const app = express();
 app.set("trust proxy", true);
@@ -21,6 +25,10 @@ app.use(
 app.use(currentUser);
 
 app.use(createProfileRouter);
+app.use(readProfileRouter);
+app.use(readAllProfilesRouter);
+app.use(updateProfileRouter);
+app.use(deleteProfileRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();
