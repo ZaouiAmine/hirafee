@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: zaouiamine/client
+          image: malakboudaa/client
           # env:
           #   - name: JWT_KEY
           #     valueFrom:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gig
-          image: zaouiamine/gig
+          image: malakboudaa/gig
           env:
             - name: MONGO_URI
               value: "mongodb://gig-mongo-srv:27017/gig"

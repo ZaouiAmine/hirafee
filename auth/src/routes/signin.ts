@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
-
+import {body, validationResult} from 'express-validator'
 import { User } from "../models/user";
 import { validateRequest } from "@hirafee-platforme/common";
 import { BadRequestError } from "@hirafee-platforme/common";
