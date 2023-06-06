@@ -22,6 +22,7 @@ router.post(
       location,
       user: req.currentUser!.id,
       portfolio,
+      banned: false,
     });
     await profile.save();
     res.status(201).send(profile);

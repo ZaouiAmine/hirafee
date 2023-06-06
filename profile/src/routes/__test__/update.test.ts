@@ -34,25 +34,22 @@ it("returns a 401 if the user is not authenticated", async () => {
 });
 
 it("updates the profile if valid inputs are provided", async () => {
-  const name = "John Doe";
-  const biography = "Lorem ipsum";
-  const phoneNumber = "123456789";
-  const location = "United States";
-  const portfolio = [
-    { image: "example.jpg", description: "Example portfolio item" },
-  ];
+  const profile = {
+    name: "John Doe",
+    biography: "Lorem ipsum",
+    phoneNumber: "123456789",
+    location: "United States",
+    portfolio: [
+      { image: "example.jpg", description: "Example portfolio item" },
+    ],
+    banned: false,
+  };
 
   // Create a profile
   const createResponse = await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin())
-    .send({
-      name,
-      biography,
-      phoneNumber,
-      location,
-      portfolio,
-    })
+    .send(profile)
     .expect(201);
 
   const updatedName = "Updated Name";
@@ -81,14 +78,7 @@ it("updates the profile if valid inputs are provided", async () => {
   expect(updateResponse.body.biography).toEqual(updatedBiography);
   expect(updateResponse.body.phoneNumber).toEqual(updatedPhoneNumber);
   expect(updateResponse.body.location).toEqual(updatedLocation);
-  //   expect(updateResponse.body.portfolio).toEqual(
-  //     expect.objectContaining({
-  //       // Specify the properties to check for equality
-  //       title: updatedPortfolio.image,
-  //       description: updatedPortfolio.description,
-  //       // ... add other properties here
-  //     })
-  //   );
+  //   expect(updateResponse.body.portfolio).toEqual(updatedPortfolio);
 });
 
 it("returns a 404 if an invalid profile ID is provided", async () => {

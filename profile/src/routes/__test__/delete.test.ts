@@ -50,7 +50,6 @@ it("deletes the profile if it exists and the user is authenticated", async () =>
     .get(`/api/profiles/${createResponse.body.id}`)
     .set("Cookie", global.signin())
     .expect(404);
-  console.log(createResponse.body.id);
 });
 
 it("returns a 404 if an invalid profile ID is provided", async () => {

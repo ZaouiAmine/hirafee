@@ -13,6 +13,13 @@ router.get(
     if (!gig) {
       throw new NotFoundError();
     }
+    // Check if the authenticated user is the owner of the gig or has the role of admin
+    if (
+      gig.user.toString() !== req.currentUser!.id &&
+      req.currentUser!.role !== "admin"
+    ) {
+      throw new NotFoundError();
+    }
 
     res.send(gig);
   }

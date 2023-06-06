@@ -7,6 +7,7 @@ interface ProfileAttrs {
   portfolio: Array<PortfolioItem>;
   user: string;
   biography: string;
+  banned: boolean;
 }
 
 interface ProfileModel extends mongoose.Model<ProfileDoc> {
@@ -20,6 +21,7 @@ interface ProfileDoc extends mongoose.Document {
   portfolio: Array<PortfolioItem>;
   user: string;
   biography: string;
+  banned: boolean;
 }
 
 interface PortfolioItem {
@@ -60,6 +62,11 @@ const profileSchema = new mongoose.Schema(
     biography: {
       type: String,
       required: true,
+    },
+    banned: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   {

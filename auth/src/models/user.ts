@@ -1,18 +1,22 @@
 import mongoose from "mongoose";
 import { Password } from "../services/password";
 
-interface userAttrs {
+interface UserAttrs {
   email: string;
   password: string;
+  role: string;
+  banned: boolean;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: userAttrs): UserDoc;
+  build(attrs: UserAttrs): UserDoc;
 }
 
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
+  role: string;
+  banned: boolean;
 }
 
 const userSchema = new mongoose.Schema(
@@ -24,6 +28,14 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    banned: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -45,7 +57,7 @@ userSchema.pre("save", async function (done) {
   done();
 });
 
-userSchema.statics.build = (attrs: userAttrs) => {
+userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 

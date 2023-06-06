@@ -6,10 +6,12 @@ it("has a route listening for /api/profiles for post requests", async () => {
   const response = await request(app).post("/api/profiles").send({});
   expect(response.status).not.toEqual(404);
 });
-it("it can only be accessed if user is signs in ", async () => {
+
+it("it can only be accessed if the user is signed in", async () => {
   const response = await request(app).post("/api/profiles").send({});
   expect(response.status).toEqual(401);
 });
+
 it("returns a status other than 401 if the user is signed in", async () => {
   const response = await request(app)
     .post("/api/profiles")
@@ -18,7 +20,8 @@ it("returns a status other than 401 if the user is signed in", async () => {
 
   expect(response.status).not.toEqual(401);
 });
-it("return an error for invalid name", async () => {
+
+it("returns an error for an invalid name", async () => {
   await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin())
@@ -42,7 +45,8 @@ it("return an error for invalid name", async () => {
     })
     .expect(400);
 });
-it("return an error for invalid biography", async () => {
+
+it("returns an error for an invalid biography", async () => {
   await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin())
@@ -66,7 +70,8 @@ it("return an error for invalid biography", async () => {
     })
     .expect(400);
 });
-it("return an error for invalid phoneNumber", async () => {
+
+it("returns an error for an invalid phoneNumber", async () => {
   await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin())
@@ -90,7 +95,8 @@ it("return an error for invalid phoneNumber", async () => {
     })
     .expect(400);
 });
-it("return an error for invalid location", async () => {
+
+it("returns an error for an invalid location", async () => {
   await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin())
@@ -134,4 +140,3 @@ it("creates a profile with valid inputs", async () => {
   profiles = await Profile.find({});
   expect(profiles.length).toEqual(1);
 });
-it("", async () => {});

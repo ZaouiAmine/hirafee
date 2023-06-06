@@ -32,6 +32,7 @@ router.post(
       user: req.currentUser!.id,
       category,
       requirements,
+      banned: false,
     });
     await gigs.save();
     res.status(201).send(gigs);

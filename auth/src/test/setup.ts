@@ -53,6 +53,7 @@ global.signin = async () => {
     .send({
       email: email,
       password: password,
+      role: "client",
     })
     .expect(201);
 

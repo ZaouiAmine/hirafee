@@ -6,6 +6,7 @@ it("clears the cookie after signing out", async () => {
     .send({
       email: "test@test.com",
       password: "password",
+      role: "client",
     })
     .expect(201);
   const response = await request(app)

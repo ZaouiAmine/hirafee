@@ -8,6 +8,7 @@ interface GigAttrs {
   user: string;
   category: string;
   requirements: string[];
+  banned: boolean;
 }
 
 interface GigModel extends mongoose.Model<GigDoc> {
@@ -22,6 +23,7 @@ interface GigDoc extends mongoose.Document {
   user: string;
   category: string;
   requirements: string[];
+  banned: boolean;
 }
 
 const gigSchema = new mongoose.Schema(
@@ -53,6 +55,11 @@ const gigSchema = new mongoose.Schema(
     requirements: {
       type: [String],
       required: true,
+    },
+    banned: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   {

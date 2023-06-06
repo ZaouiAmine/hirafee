@@ -15,6 +15,7 @@ it("returns a 404 if the gig is not found", async () => {
       location: "Updated Location",
       category: "Updated Category",
       requirements: ["Updated Requirement 1", "Updated Requirement 2"],
+      banned: false,
     })
     .expect(404);
 });
@@ -31,6 +32,7 @@ it("returns a 401 if the user is not authenticated", async () => {
       location: "Updated Location",
       category: "Updated Category",
       requirements: ["Updated Requirement 1", "Updated Requirement 2"],
+      banned: false,
     })
     .expect(401);
 });
@@ -43,6 +45,7 @@ it("updates the gig if valid inputs are provided", async () => {
     location: "New York",
     category: "Web Development",
     requirements: ["Experience in HTML/CSS", "Knowledge of JavaScript"],
+    banned: false,
   };
 
   // Create a gig
@@ -61,6 +64,7 @@ it("updates the gig if valid inputs are provided", async () => {
     "Updated Requirement 1",
     "Updated Requirement 2",
   ];
+  const updatedBanned = true;
 
   // Update the gig
   const updateResponse = await request(app)
@@ -73,6 +77,7 @@ it("updates the gig if valid inputs are provided", async () => {
       location: updatedLocation,
       category: updatedCategory,
       requirements: updatedRequirements,
+      banned: updatedBanned,
     })
     .expect(200);
 
@@ -83,6 +88,7 @@ it("updates the gig if valid inputs are provided", async () => {
   expect(updateResponse.body.location).toEqual(updatedLocation);
   expect(updateResponse.body.category).toEqual(updatedCategory);
   expect(updateResponse.body.requirements).toEqual(updatedRequirements);
+  expect(updateResponse.body.banned).toEqual(updatedBanned);
 });
 
 it("returns a 404 if an invalid gig ID is provided", async () => {
@@ -98,6 +104,7 @@ it("returns a 404 if an invalid gig ID is provided", async () => {
       location: "Updated Location",
       category: "Updated Category",
       requirements: ["Updated Requirement 1", "Updated Requirement 2"],
+      banned: false,
     })
     .expect(404);
 });

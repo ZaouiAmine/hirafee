@@ -49,14 +49,25 @@ it("returns all profiles", async () => {
   expect(response.body[0].biography).toEqual(profile1.biography);
   expect(response.body[0].phoneNumber).toEqual(profile1.phoneNumber);
   expect(response.body[0].location).toEqual(profile1.location);
-  //   expect(response.body[0].portfolio).toEqual(profile1.portfolio);
+  expect(response.body[0].portfolio[0].image).toEqual(
+    profile1.portfolio[0].image
+  );
+  expect(response.body[0].portfolio[0].description).toEqual(
+    profile1.portfolio[0].description
+  );
 
   expect(response.body[1].name).toEqual(profile2.name);
   expect(response.body[1].biography).toEqual(profile2.biography);
   expect(response.body[1].phoneNumber).toEqual(profile2.phoneNumber);
   expect(response.body[1].location).toEqual(profile2.location);
-  //   expect(response.body[1].portfolio).toEqual(profile2.portfolio);
+  expect(response.body[1].portfolio[0].image).toEqual(
+    profile2.portfolio[0].image
+  );
+  expect(response.body[1].portfolio[0].description).toEqual(
+    profile2.portfolio[0].description
+  );
 });
+
 it("returns a 401 if the user is not authenticated", async () => {
   await request(app).get("/api/profiles").send({}).expect(401);
 });
