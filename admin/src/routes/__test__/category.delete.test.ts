@@ -21,10 +21,10 @@ it("returns 401 if user is not authenticated", async () => {
 });
 
 it("returns 401 if user is not an admin", async () => {
-  const invalidId = new mongoose.Types.ObjectId().toHexString();
+  const catId = new mongoose.Types.ObjectId().toHexString();
 
   await request(app)
-    .delete(`/api/categories/${invalidId}`)
+    .delete(`/api/categories/${catId}`)
     .set("Cookie", global.signin("user"))
     .expect(401);
 });

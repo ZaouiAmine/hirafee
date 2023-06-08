@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Ban } from "../../models/ban";
+import mongoose from "mongoose";
 
 it("has a route listening for /api/bans for post requests", async () => {
   const response = await request(app).post("/api/bans").send({});
@@ -38,13 +39,15 @@ it("returns an error for missing userId or reason", async () => {
 it("creates a ban with valid inputs", async () => {
   let bans = await Ban.find({});
   expect(bans.length).toEqual(0);
-
+  const fakeId = new mongoose.Types.ObjectId().toHexString();
   await request(app)
     .post("/api/bans")
     .set("Cookie", global.signin("admin"))
-    .send({ userId: "12345", reason: "Some reason" })
+    .send({ userId: fakeId, reason: "Some reason" })
     .expect(201);
 
   bans = await Ban.find({});
   expect(bans.length).toEqual(1);
 });
+
+// checked manually

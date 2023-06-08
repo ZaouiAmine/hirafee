@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 interface ReportAttrs {
-  userId: string;
-  gigId: string;
+  reportedItemId: string;
+  type: "gig" | "profile";
   reason: string;
+  state: "processed" | "unprocessed";
   createdAt: Date;
 }
 
@@ -12,26 +13,38 @@ interface ReportModel extends mongoose.Model<ReportDoc> {
 }
 
 interface ReportDoc extends mongoose.Document {
-  userId: string;
-  gigId: string;
+  reportedItemId: string;
+  type: "gig" | "profile";
   reason: string;
+  state: "processed" | "unprocessed";
   createdAt: Date;
 }
 
 const reportSchema = new mongoose.Schema(
   {
-    userId: {
+    // id the reported item
+    reportedItemId: {
       type: String,
       required: true,
     },
-    gigId: {
+    // type of the report
+    type: {
       type: String,
+      enum: ["gig", "profile"],
       required: true,
     },
+    // reason for the report
     reason: {
       type: String,
       required: true,
     },
+    // state of the report
+    state: {
+      type: String,
+      enum: ["processed", "unprocessed"],
+      required: true,
+    },
+    // date of the report
     createdAt: {
       type: Date,
       required: true,

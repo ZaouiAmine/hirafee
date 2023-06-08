@@ -8,19 +8,76 @@ const router = express.Router();
 router.post(
   "/api/profiles",
   requireAuth,
-  [body("name").not().isEmpty().withMessage("name is required")],
-  [body("biography").not().isEmpty().withMessage("bio is required")],
-  [body("phoneNumber").not().isEmpty().withMessage("phoneNumber is required")],
-  [body("location").not().isEmpty().withMessage("location is required")],
+  [
+    body("email")
+      .notEmpty()
+      .withMessage("email is required")
+      .isString()
+      .withMessage("email must be a string"),
+    body("role")
+      .notEmpty()
+      .withMessage("role is required")
+      .isIn(["artisan", "admin", "client"])
+      .withMessage("Invalid role value")
+      .isString()
+      .withMessage("role must be a string"),
+    body("firstName")
+      .notEmpty()
+      .withMessage("firstName is required")
+      .isString()
+      .withMessage("firstName must be a string"),
+    body("lastName")
+      .notEmpty()
+      .withMessage("lastName is required")
+      .isString()
+      .withMessage("lastName must be a string"),
+    body("username")
+      .notEmpty()
+      .withMessage("username is required")
+      .isString()
+      .withMessage("username must be a string"),
+    body("biography")
+      .notEmpty()
+      .withMessage("biography is required")
+      .isString()
+      .withMessage("biography must be a string"),
+    body("phoneNumber")
+      .notEmpty()
+      .withMessage("phoneNumber is required")
+      .isString()
+      .withMessage("phoneNumber must be a string"),
+    body("location")
+      .notEmpty()
+      .withMessage("location is required")
+      .isString()
+      .withMessage("location must be a string"),
+  ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { name, biography, phoneNumber, location, portfolio } = req.body;
-    const profile = Profile.build({
-      name,
+    const {
+      email,
+      role,
+      firstName,
+      lastName,
+      username,
       biography,
       phoneNumber,
       location,
-      user: req.currentUser!.id,
+      portfolio,
+      createdTheProfile,
+      belongsTo,
+    } = req.body;
+    const profile = Profile.build({
+      email,
+      role,
+      firstName,
+      lastName,
+      username,
+      biography,
+      phoneNumber,
+      location,
+      belongsTo,
+      createdTheProfile,
       portfolio,
       banned: false,
     });

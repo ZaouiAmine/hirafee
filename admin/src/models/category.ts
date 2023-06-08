@@ -14,6 +14,7 @@ interface CategoryDoc extends mongoose.Document {
 
 const categorySchema = new mongoose.Schema(
   {
+    // name of the category of work
     name: {
       type: String,
       required: true,

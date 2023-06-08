@@ -2,15 +2,13 @@ import express, { Request, Response } from "express";
 import {
   requireAuth,
   requireRole,
-  validateRequest,
   NotFoundError,
-  NotAuthorizedError,
 } from "@hirafee-platforme/common";
-import { body } from "express-validator";
+
 import { Ban } from "../models/ban";
 
 const router = express.Router();
-
+// this routes allows to delete a ban only by an admin
 router.delete(
   "/api/bans/:id",
   requireAuth,
@@ -22,11 +20,6 @@ router.delete(
       throw new NotFoundError();
     }
 
-    // Check if the authenticated user has the role of admin
-    if (req.currentUser!.role !== "admin") {
-      throw new NotAuthorizedError();
-    }
-
     await Ban.findByIdAndDelete(req.params.id);
 
     res.status(204).send();
@@ -34,3 +27,5 @@ router.delete(
 );
 
 export { router as banDeleteRouter };
+
+// checked manually

@@ -1,18 +1,18 @@
 import express, { Request, Response } from "express";
 import { requireAuth, currentUser } from "@hirafee-platforme/common";
-import { Gig } from "../models/gig";
+import { Review } from "../models/review";
 
 const router = express.Router();
 
 router.get(
-  "/api/gigs",
+  "/api/reviews",
   requireAuth,
   currentUser,
   async (req: Request, res: Response) => {
-    let gigs;
+    const reviews = await Review.find({});
 
-    res.send(gigs);
+    res.send(reviews);
   }
 );
 
-export { router as readAllGigsRouter };
+export { router as readAllReviewsRouter };

@@ -1,22 +1,21 @@
 import express, { Request, Response } from "express";
 import { NotFoundError, requireAuth } from "@hirafee-platforme/common";
-import { Gig } from "../models/gig";
+import { Review } from "../models/review";
 
 const router = express.Router();
 
 router.get(
-  "/api/gigs/:id",
+  "/api/reviews/:id",
   requireAuth,
   async (req: Request, res: Response) => {
-    const gig = await Gig.findById(req.params.id);
+    const review = await Review.findById(req.params.id);
 
-    if (!gig) {
+    if (!review) {
       throw new NotFoundError();
     }
-    // Check if the authenticated user is the owner of the gig or has the role of admin
 
-    res.send(gig);
+    res.send(review);
   }
 );
 
-export { router as readGigRouter };
+export { router as readReviewRouter };

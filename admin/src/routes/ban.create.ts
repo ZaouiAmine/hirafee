@@ -9,6 +9,8 @@ import { Ban } from "../models/ban";
 
 const router = express.Router();
 
+// this creates a user ban , only the admin can do that
+
 router.post(
   "/api/bans",
   requireAuth,
@@ -34,3 +36,5 @@ router.post(
 );
 
 export { router as banCreateRouter };
+
+// checked manually

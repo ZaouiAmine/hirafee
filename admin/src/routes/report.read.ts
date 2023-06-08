@@ -1,9 +1,5 @@
 import express, { Request, Response } from "express";
-import {
-  requireAuth,
-  requireRole,
-  validateRequest,
-} from "@hirafee-platforme/common";
+import { requireAuth, requireRole } from "@hirafee-platforme/common";
 
 import { Report } from "../models/report";
 

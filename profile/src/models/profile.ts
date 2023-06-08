@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
 interface ProfileAttrs {
-  name: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  username: string;
   phoneNumber: string;
   location: string;
-  portfolio: Array<PortfolioItem>;
-  user: string;
   biography: string;
+  portfolio: Array<PortfolioItem>;
+  role: "artisan" | "client" | "admin";
+  belongsTo: mongoose.Types.ObjectId;
+  createdTheProfile: mongoose.Types.ObjectId;
   banned: boolean;
 }
 
@@ -15,11 +20,16 @@ interface ProfileModel extends mongoose.Model<ProfileDoc> {
 }
 
 interface ProfileDoc extends mongoose.Document {
-  name: string;
+  email: string;
+  belongsTo: mongoose.Types.ObjectId;
+  role: ["admin", "aritisan", "client"];
+  firstName: string;
+  lastName: string;
+  username: string;
   phoneNumber: string;
   location: string;
   portfolio: Array<PortfolioItem>;
-  user: string;
+  createdTheProfile: mongoose.Types.ObjectId;
   biography: string;
   banned: boolean;
 }
@@ -31,7 +41,28 @@ interface PortfolioItem {
 
 const profileSchema = new mongoose.Schema(
   {
-    name: {
+    email: {
+      type: String,
+      required: true,
+    },
+    belongsTo: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["artisan", "client", "admin"],
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    username: {
       type: String,
       required: true,
     },
@@ -55,8 +86,8 @@ const profileSchema = new mongoose.Schema(
         },
       },
     ],
-    user: {
-      type: String,
+    createdTheProfile: {
+      type: mongoose.Types.ObjectId,
       required: true,
     },
     biography: {

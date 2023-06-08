@@ -1,10 +1,6 @@
 import express, { Request, Response } from "express";
-import {
-  requireAuth,
-  requireRole,
-  validateRequest,
-} from "@hirafee-platforme/common";
-import { body } from "express-validator";
+import { requireAuth, requireRole } from "@hirafee-platforme/common";
+
 import { Category } from "../models/category";
 
 const router = express.Router();

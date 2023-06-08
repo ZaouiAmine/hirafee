@@ -14,8 +14,9 @@ it("can only be accessed by admin users", async () => {
 });
 
 it("returns a status other than 401 if the user is an admin", async () => {
+  const fakeId = new mongoose.Types.ObjectId().toHexString();
   const ban = Ban.build({
-    userId: "user-id",
+    userId: fakeId,
     reason: "Some reason",
     createdAt: new Date(),
   });
@@ -29,8 +30,9 @@ it("returns a status other than 401 if the user is an admin", async () => {
 });
 
 it("returns a 401 if the user is not an admin", async () => {
+  const fakeId = new mongoose.Types.ObjectId().toHexString();
   const ban = Ban.build({
-    userId: "user-id",
+    userId: fakeId,
     reason: "Some reason",
     createdAt: new Date(),
   });
@@ -53,8 +55,9 @@ it("returns a 404 if the ban is not found", async () => {
 });
 
 it("deletes the ban if it exists and the user is an admin", async () => {
+  const fakeId = new mongoose.Types.ObjectId().toHexString();
   const ban = Ban.build({
-    userId: "user-id",
+    userId: fakeId,
     reason: "Some reason",
     createdAt: new Date(),
   });
@@ -68,3 +71,5 @@ it("deletes the ban if it exists and the user is an admin", async () => {
   const deletedBan = await Ban.findById(ban.id);
   expect(deletedBan).toBeNull();
 });
+
+// checked manually

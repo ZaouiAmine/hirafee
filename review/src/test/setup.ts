@@ -30,11 +30,12 @@ afterAll(async () => {
 });
 
 global.signin = (role) => {
+  const invalidId = new mongoose.Types.ObjectId().toHexString();
   // build a jwt payload
   const payload = {
-    id: "fjdlmsqjfd",
+    id: invalidId,
     email: "test@test.com",
-    role,
+    role: role,
   };
   // create the jsonwebtoken
   const token = jwt.sign(payload, process.env.JWT_KEY!);

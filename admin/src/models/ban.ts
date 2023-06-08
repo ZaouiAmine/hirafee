@@ -18,14 +18,17 @@ interface BanDoc extends mongoose.Document {
 
 const banSchema = new mongoose.Schema(
   {
+    // the id of the user that got banned
     userId: {
-      type: String,
+      type: mongoose.Types.ObjectId,
       required: true,
     },
+    // the reason why he got banned
     reason: {
       type: String,
       required: true,
     },
+    // the date he got banned
     createdAt: {
       type: Date,
       required: true,

@@ -8,7 +8,7 @@ it("returns 200 and all categories on successful read", async () => {
 
   const response = await request(app)
     .get("/api/categories")
-
+    .set("Cookie", global.signin("admin"))
     .expect(200);
 
   expect(response.body.length).toEqual(2);

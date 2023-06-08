@@ -1,17 +1,12 @@
 import express, { Request, Response } from "express";
-import {
-  requireAuth,
-  requireRole,
-  validateRequest,
-} from "@hirafee-platforme/common";
-import { body } from "express-validator";
+import { requireAuth } from "@hirafee-platforme/common";
 import { Category } from "../models/category";
 
 const router = express.Router();
 
 router.get(
   "/api/categories",
-
+  requireAuth,
   async (req: Request, res: Response) => {
     const categories = await Category.find();
 

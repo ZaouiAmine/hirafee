@@ -14,18 +14,28 @@ router.post(
   requireAuth,
   requireRole("admin"), // Middleware to restrict access to admin users only
   [
-    body("userId").notEmpty().withMessage("User ID is required"),
-    body("gigId").notEmpty().withMessage("Gig ID is required"),
+    body("type")
+      .notEmpty()
+      .isIn(["gig", "profile"])
+      .withMessage("Invalid report type"),
+    body("reportedItemId")
+      .notEmpty()
+      .withMessage("Reported item ID is required"),
     body("reason").notEmpty().withMessage("Reason is required"),
+    body("state")
+      .notEmpty()
+      .isIn(["processed", "unprocessed"])
+      .withMessage("Invalid report state"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { userId, gigId, reason } = req.body;
+    const { type, reportedItemId, reason, state } = req.body;
 
     const report = Report.build({
-      userId,
-      gigId,
+      type,
+      reportedItemId,
       reason,
+      state,
       createdAt: new Date(),
     });
 
