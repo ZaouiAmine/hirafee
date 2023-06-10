@@ -2,56 +2,61 @@ import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
 
+const fakeId = new mongoose.Types.ObjectId();
+
 it("returns all reviews", async () => {
   const invalidId = new mongoose.Types.ObjectId().toHexString();
 
   const rating = 5;
   const comment = "Lorem ipsum";
   const createdAt = new Date();
-  const artisan = invalidId;
+  const artisanId = invalidId;
+  const clientId = invalidId;
 
   const review1 = {
-    artisan,
-    createdAt,
     rating,
     comment,
+    artisanId,
+    clientId,
+    createdAt,
   };
 
   const review2 = {
-    artisan,
-    createdAt,
     rating,
     comment,
+    artisanId,
+    clientId,
+    createdAt,
   };
 
   // Create two reviews
   await request(app)
     .post("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send(review1)
     .expect(201);
 
   await request(app)
     .post("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send(review2)
     .expect(201);
 
   // Read all reviews
   const response = await request(app)
     .get("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send()
     .expect(200);
 
   // Assert the response contains both reviews
   expect(response.body.length).toEqual(2);
-  expect(response.body[0].artisan).toEqual(review1.artisan);
+  expect(response.body[0].artisanId).toEqual(review1.artisanId);
 
   expect(response.body[0].rating).toEqual(review1.rating);
   expect(response.body[0].comment).toEqual(review1.comment);
 
-  expect(response.body[1].artisan).toEqual(review2.artisan);
+  expect(response.body[1].artisanId).toEqual(review2.artisanId);
 
   expect(response.body[1].rating).toEqual(review2.rating);
   expect(response.body[1].comment).toEqual(review2.comment);
@@ -64,7 +69,7 @@ it("returns a 401 if the user is not authenticated", async () => {
 it("returns an empty array if no reviews exist", async () => {
   const response = await request(app)
     .get("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send()
     .expect(200);
 
@@ -77,38 +82,41 @@ it("returns reviews with transformed IDs", async () => {
   const rating = 5;
   const comment = "Lorem ipsum";
   const createdAt = new Date();
-  const artisan = invalidId;
+  const artisanId = invalidId;
+  const clientId = invalidId;
 
   const review1 = {
-    artisan,
-    createdAt,
     rating,
     comment,
+    artisanId,
+    clientId,
+    createdAt,
   };
 
   const review2 = {
-    artisan,
-    createdAt,
     rating,
     comment,
+    artisanId,
+    clientId,
+    createdAt,
   };
   // Create two reviews
   const response1 = await request(app)
     .post("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send(review1)
     .expect(201);
 
   const response2 = await request(app)
     .post("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send(review2)
     .expect(201);
 
   // Read all reviews
   const response = await request(app)
     .get("/api/reviews")
-    .set("Cookie", global.signin("client"))
+    .set("Cookie", global.signin("client", fakeId))
     .send()
     .expect(200);
 

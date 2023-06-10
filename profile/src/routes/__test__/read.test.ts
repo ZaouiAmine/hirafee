@@ -24,6 +24,7 @@ it("returns the profile if the profile is found", async () => {
     phoneNumber,
     location,
     biography,
+    categorie,
     portfolio,
     banned,
     belongsTo,
@@ -37,6 +38,7 @@ it("returns the profile if the profile is found", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -54,6 +56,7 @@ it("returns the profile if the profile is found", async () => {
       phoneNumber,
       location,
       biography,
+      categorie,
       portfolio,
       banned,
       belongsTo,
@@ -104,6 +107,7 @@ it("returns the profile with a transformed ID", async () => {
     phoneNumber,
     location,
     biography,
+    categorie,
     portfolio,
     banned,
     belongsTo,
@@ -117,12 +121,12 @@ it("returns the profile with a transformed ID", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
     createdTheProfile: fakeIdd,
   };
-
   const createResponse = await request(app)
     .post("/api/profiles")
     .set("Cookie", global.signin("admin"))
@@ -135,6 +139,7 @@ it("returns the profile with a transformed ID", async () => {
       phoneNumber,
       location,
       biography,
+      categorie,
       portfolio,
       banned,
       belongsTo,

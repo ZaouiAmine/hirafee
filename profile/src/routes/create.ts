@@ -41,6 +41,11 @@ router.post(
       .withMessage("biography is required")
       .isString()
       .withMessage("biography must be a string"),
+    body("categorie")
+      .notEmpty()
+      .withMessage("categorie is required")
+      .isString()
+      .withMessage("categorie must be a string"),
     body("phoneNumber")
       .notEmpty()
       .withMessage("phoneNumber is required")
@@ -61,6 +66,7 @@ router.post(
       lastName,
       username,
       biography,
+      categorie,
       phoneNumber,
       location,
       portfolio,
@@ -74,6 +80,7 @@ router.post(
       lastName,
       username,
       biography,
+      categorie,
       phoneNumber,
       location,
       belongsTo,

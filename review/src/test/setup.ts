@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
 declare global {
-  function signin(role: string): string[];
+  function signin(role: string, id: mongoose.Types.ObjectId): string[];
 }
 
 let mongo: any;
@@ -29,11 +29,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = (role) => {
-  const invalidId = new mongoose.Types.ObjectId().toHexString();
+global.signin = (role, id) => {
   // build a jwt payload
   const payload = {
-    id: invalidId,
+    id: id,
     email: "test@test.com",
     role: role,
   };

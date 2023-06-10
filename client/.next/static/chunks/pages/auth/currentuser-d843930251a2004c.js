@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[431],{6440:function(n,u,r){(window.__NEXT_P=window.__NEXT_P||[]).push(["/auth/currentuser",function(){return r(1522)}])},1522:function(n,u,r){"use strict";r.r(u);var e=r(5893);u.default=()=>(0,e.jsx)("h1",{children:"currentuser"})}},function(n){n.O(0,[774,888,179],function(){return n(n.s=6440)}),_N_E=n.O()}]);

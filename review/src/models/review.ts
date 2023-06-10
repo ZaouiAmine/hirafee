@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 interface ReviewAttrs {
   rating: number;
   comment: string;
-  user: string; // The user who wrote the review
-  artisan: string; // The artisan being reviewed
+  clientId: string; // The user who wrote the review
+  artisanId: string; // The artisan being reviewed
   createdAt: Date;
 }
 
@@ -15,8 +15,8 @@ interface ReviewModel extends mongoose.Model<ReviewDoc> {
 interface ReviewDoc extends mongoose.Document {
   rating: number;
   comment: string;
-  user: string;
-  artisan: string;
+  clientId: string; // The user who wrote the review
+  artisanId: string; // The artisan being reviewed
   createdAt: Date;
 }
 
@@ -32,14 +32,12 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    user: {
+    clientId: {
       type: String,
-
       required: true,
     },
-    artisan: {
+    artisanId: {
       type: String,
-
       required: true,
     },
     createdAt: {

@@ -8,6 +8,7 @@ interface ProfileAttrs {
   phoneNumber: string;
   location: string;
   biography: string;
+  categorie: string;
   portfolio: Array<PortfolioItem>;
   role: "artisan" | "client" | "admin";
   belongsTo: mongoose.Types.ObjectId;
@@ -28,6 +29,7 @@ interface ProfileDoc extends mongoose.Document {
   username: string;
   phoneNumber: string;
   location: string;
+  categorie: string;
   portfolio: Array<PortfolioItem>;
   createdTheProfile: mongoose.Types.ObjectId;
   biography: string;
@@ -71,6 +73,10 @@ const profileSchema = new mongoose.Schema(
       required: true,
     },
     location: {
+      type: String,
+      required: true,
+    },
+    categorie: {
       type: String,
       required: true,
     },

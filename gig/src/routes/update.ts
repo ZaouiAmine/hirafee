@@ -3,6 +3,7 @@ import {
   requireAuth,
   NotFoundError,
   NotAuthorizedError,
+  requireRole,
 } from "@hirafee-platforme/common";
 import { Gig } from "../models/gig";
 
@@ -11,7 +12,9 @@ const router = express.Router();
 router.put(
   "/api/gigs/:id",
   requireAuth,
+  requireRole("client"),
   async (req: Request, res: Response) => {
+    const gigId = req.params.id;
     const {
       title,
       description,
@@ -20,30 +23,35 @@ router.put(
       category,
       requirements,
       banned,
+      clientId,
+      proposals,
+      takenBy,
     } = req.body;
 
-    const gig = await Gig.findById(req.params.id);
+    const gig = await Gig.findById(gigId);
 
     if (!gig) {
       throw new NotFoundError();
     }
 
     if (
-      gig.user.toString() !== req.currentUser!.id &&
+      gig.clientId.toString() !== req.currentUser!.id &&
       req.currentUser!.role !== "admin"
     ) {
       throw new NotAuthorizedError();
     }
 
-    gig.set({
-      title,
-      description,
-      budget,
-      location,
-      category,
-      requirements,
-      banned,
-    });
+    // Update only the provided fields
+    if (title) gig.title = title;
+    if (description) gig.description = description;
+    if (budget) gig.budget = budget;
+    if (location) gig.location = location;
+    if (category) gig.category = category;
+    if (requirements) gig.requirements = requirements;
+    if (banned !== undefined) gig.banned = banned;
+    if (clientId) gig.clientId = clientId;
+    if (proposals) gig.proposals = proposals;
+    if (takenBy) gig.takenBy = takenBy;
 
     await gig.save();
 

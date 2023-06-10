@@ -14,6 +14,7 @@ it("returns all profiles", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -29,6 +30,7 @@ it("returns all profiles", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -62,6 +64,7 @@ it("returns all profiles", async () => {
   expect(response.body[0].firstName).toEqual(profile1.firstName);
   expect(response.body[0].lastName).toEqual(profile1.lastName);
   expect(response.body[0].biography).toEqual(profile1.biography);
+  expect(response.body[0].categorie).toEqual(profile1.categorie);
   expect(response.body[0].phoneNumber).toEqual(profile1.phoneNumber);
   expect(response.body[0].location).toEqual(profile1.location);
 
@@ -71,6 +74,7 @@ it("returns all profiles", async () => {
   expect(response.body[1].firstName).toEqual(profile2.firstName);
   expect(response.body[1].lastName).toEqual(profile2.lastName);
   expect(response.body[1].biography).toEqual(profile2.biography);
+  expect(response.body[1].categorie).toEqual(profile2.categorie);
   expect(response.body[1].phoneNumber).toEqual(profile2.phoneNumber);
   expect(response.body[1].location).toEqual(profile2.location);
 });
@@ -101,6 +105,7 @@ it("returns profiles in descending order of creation", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -116,6 +121,7 @@ it("returns profiles in descending order of creation", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -159,6 +165,7 @@ it("returns profiles with transformed IDs", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,
@@ -174,6 +181,7 @@ it("returns profiles with transformed IDs", async () => {
     location: "arizona",
     role: "admin",
     biography: "fjkdlqmsjfdmkjsmqfk",
+    categorie: "fjkdlqmsjfdmkjsmqfk",
     portfolio: [],
     banned: false,
     belongsTo: fakeId,

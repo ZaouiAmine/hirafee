@@ -9,7 +9,7 @@ router.get(
   requireAuth,
   currentUser,
   async (req: Request, res: Response) => {
-    let gigs;
+    let gigs = await Gig.find();
 
     res.send(gigs);
   }

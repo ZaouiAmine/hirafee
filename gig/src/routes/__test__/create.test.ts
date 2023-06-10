@@ -1,6 +1,9 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Gig } from "../../models/gig";
+import mongoose from "mongoose";
+
+const fakeId = new mongoose.Types.ObjectId();
 
 it("has a route listening for /api/gigs for post requests", async () => {
   const response = await request(app).post("/api/gigs").send({});
@@ -15,7 +18,7 @@ it("can only be accessed if the user is signed in", async () => {
 it("returns a status other than 401 if the user is signed in", async () => {
   const response = await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({});
 
   expect(response.status).not.toEqual(401);
@@ -24,20 +27,22 @@ it("returns a status other than 401 if the user is signed in", async () => {
 it("returns an error for invalid title", async () => {
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
-      title: "",
-      description: "Lorem ipsum",
-      budget: 1000,
-      location: "New York",
-      category: "Web Development",
+      title: "string",
+      description: "string",
+      budget: 5,
+      location: "string",
+      clientId: new mongoose.Types.ObjectId().toHexString(),
+      category: "string",
       requirements: [],
+      banned: false,
     })
     .expect(400);
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       description: "Lorem ipsum",
       budget: 1000,
@@ -51,7 +56,7 @@ it("returns an error for invalid title", async () => {
 it("returns an error for invalid description", async () => {
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "",
@@ -64,7 +69,7 @@ it("returns an error for invalid description", async () => {
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       budget: 1000,
@@ -78,7 +83,7 @@ it("returns an error for invalid description", async () => {
 it("returns an error for invalid budget", async () => {
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -91,7 +96,7 @@ it("returns an error for invalid budget", async () => {
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -105,7 +110,7 @@ it("returns an error for invalid budget", async () => {
 it("returns an error for invalid location", async () => {
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -118,7 +123,7 @@ it("returns an error for invalid location", async () => {
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -132,7 +137,7 @@ it("returns an error for invalid location", async () => {
 it("returns an error for invalid category", async () => {
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -145,7 +150,7 @@ it("returns an error for invalid category", async () => {
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -162,7 +167,7 @@ it("creates a gig with valid inputs", async () => {
 
   await request(app)
     .post("/api/gigs")
-    .set("Cookie", global.signin())
+    .set("Cookie", global.signin("client", fakeId))
     .send({
       title: "Web Design",
       description: "Lorem ipsum",
@@ -170,6 +175,9 @@ it("creates a gig with valid inputs", async () => {
       location: "New York",
       category: "Web Development",
       requirements: [],
+      clientId: fakeId.toHexString(),
+      proposals: [],
+      takenBy: "",
     })
     .expect(201);
 

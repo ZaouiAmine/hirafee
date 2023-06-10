@@ -4,6 +4,7 @@ import {
   NotFoundError,
   NotAuthorizedError,
   currentUser,
+  requireRole,
 } from "@hirafee-platforme/common";
 import { Review } from "../models/review";
 
@@ -12,6 +13,7 @@ const router = express.Router();
 router.delete(
   "/api/reviews/:id",
   requireAuth,
+  requireRole("client"),
   currentUser,
   async (req: Request, res: Response) => {
     const review = await Review.findById(req.params.id);
@@ -21,10 +23,7 @@ router.delete(
     }
 
     // Check if the authenticated user is the owner of the review or has the role of admin
-    if (
-      review.user.toString() !== req.currentUser!.id &&
-      req.currentUser!.role !== "admin"
-    ) {
+    if (review.clientId.toString() !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
 

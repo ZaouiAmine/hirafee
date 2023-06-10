@@ -3,6 +3,7 @@ import {
   requireAuth,
   NotFoundError,
   NotAuthorizedError,
+  requireRole,
 } from "@hirafee-platforme/common";
 import { Review } from "../models/review";
 
@@ -11,6 +12,7 @@ const router = express.Router();
 router.put(
   "/api/reviews/:id",
   requireAuth,
+  requireRole("client"),
   async (req: Request, res: Response) => {
     const { rating, comment } = req.body;
 
@@ -21,7 +23,7 @@ router.put(
     }
 
     if (
-      review.user.toString() !== req.currentUser!.id &&
+      review.clientId.toString() !== req.currentUser!.id &&
       req.currentUser!.role !== "admin"
     ) {
       throw new NotAuthorizedError();

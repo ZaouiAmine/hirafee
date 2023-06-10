@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
-import { requireAuth, NotFoundError } from "@hirafee-platforme/common";
-import { body } from "express-validator";
+import {
+  requireAuth,
+  NotFoundError,
+  NotAuthorizedError,
+  requireRole,
+} from "@hirafee-platforme/common";
 import { Profile } from "../models/profile";
 
 const router = express.Router();
@@ -8,75 +12,50 @@ const router = express.Router();
 router.put(
   "/api/profiles/:id",
   requireAuth,
-  [
-    body("email").optional().isString().withMessage("email must be a string"),
-    body("role")
-      .optional()
-      .isString()
-      .isIn(["artisan", "admin", "client"])
-      .withMessage("Invalid role value"),
-    body("firstName")
-      .optional()
-      .isString()
-      .withMessage("firstName must be a string"),
-    body("lastName")
-      .optional()
-      .isString()
-      .withMessage("lastName must be a string"),
-    body("username")
-      .optional()
-      .isString()
-      .withMessage("username must be a string"),
-    body("biography")
-      .optional()
-      .isString()
-      .withMessage("biography must be a string"),
-    body("phoneNumber")
-      .optional()
-      .isString()
-      .withMessage("phoneNumber must be a string"),
-    body("location")
-      .optional()
-      .isString()
-      .withMessage("location must be a string"),
-  ],
-
+  requireRole("admin"),
   async (req: Request, res: Response) => {
+    const profileId = req.params.id;
     const {
       email,
-      role,
       firstName,
       lastName,
       username,
-      biography,
       phoneNumber,
       location,
+      biography,
+      categorie,
       portfolio,
-      banned,
+      role,
       belongsTo,
       createdTheProfile,
+      banned,
     } = req.body;
 
-    const profile = await Profile.findById(req.params.id);
+    const profile = await Profile.findById(profileId);
 
     if (!profile) {
       throw new NotFoundError();
     }
 
-    profile.set({
-      email,
-      role,
-      firstName,
-      lastName,
-      username,
-      biography,
-      phoneNumber,
-      location,
-      portfolio,
-      banned,
-      belongsTo,
-      createdTheProfile,
-    });
+    // Only allow admins to update the profile
+    if (req.currentUser!.role !== "admin") {
+      throw new NotAuthorizedError();
+    }
+
+    // Update only the provided fields
+    if (email) profile.email = email;
+    if (firstName) profile.firstName = firstName;
+    if (lastName) profile.lastName = lastName;
+    if (username) profile.username = username;
+    if (phoneNumber) profile.phoneNumber = phoneNumber;
+    if (location) profile.location = location;
+    if (biography) profile.biography = biography;
+    if (categorie) profile.categorie = categorie;
+    if (portfolio) profile.portfolio = portfolio;
+    if (role) profile.role = role;
+    if (belongsTo) profile.belongsTo = belongsTo;
+    if (createdTheProfile) profile.createdTheProfile = createdTheProfile;
+    if (banned !== undefined) profile.banned = banned;
 
     await profile.save();
 
