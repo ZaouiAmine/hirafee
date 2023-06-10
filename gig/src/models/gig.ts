@@ -5,9 +5,12 @@ interface GigAttrs {
   description: string;
   budget: number;
   location: string;
-  user: string;
+  clientId: string;
   category: string;
+  proposals: string[];
+  takenBy: string;
   requirements: string[];
+  banned: boolean;
 }
 
 interface GigModel extends mongoose.Model<GigDoc> {
@@ -19,13 +22,21 @@ interface GigDoc extends mongoose.Document {
   description: string;
   budget: number;
   location: string;
-  user: string;
+  clientId: string;
   category: string;
+  proposals: string[];
+  takenBy: string;
   requirements: string[];
+  banned: boolean;
 }
 
 const gigSchema = new mongoose.Schema(
   {
+    takenBy: {
+      type: String,
+      default: null,
+      required: false,
+    },
     title: {
       type: String,
       required: true,
@@ -42,7 +53,7 @@ const gigSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    user: {
+    clientId: {
       type: String,
       required: true,
     },
@@ -53,6 +64,15 @@ const gigSchema = new mongoose.Schema(
     requirements: {
       type: [String],
       required: true,
+    },
+    proposals: {
+      type: [String],
+      required: false,
+    },
+    banned: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   {

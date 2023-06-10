@@ -40,3 +40,19 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: zaouiamine/admin
+      context: admin
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: zaouiamine/review
+      context: review
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

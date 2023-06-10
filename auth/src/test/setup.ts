@@ -42,7 +42,7 @@ afterAll(async () => {
   await mongo.stop();
   await mongoose.connection.close();
 });
-
+const fakeId = new mongoose.Types.ObjectId();
 global.signin = async () => {
   const email = "test@test.com";
   const password = "password";
@@ -51,8 +51,18 @@ global.signin = async () => {
     .post("/api/users/signup")
 
     .send({
-      email: email,
-      password: password,
+      email: "test@test.com",
+      password: "password",
+      firstName: "John",
+      lastName: "Doe",
+      username: "johndoe",
+      phoneNumber: "1234567890",
+      location: "New York",
+      biography: "I am a client",
+      categorie: "category",
+      role: "client",
+      belongsTo: fakeId.toHexString(), // Replace with valid MongoDB ObjectId
+      createdTheProfile: fakeId.toHexString(), // Replace with valid MongoDB ObjectId
     })
     .expect(201);
 

@@ -13,6 +13,7 @@ router.get(
     if (!gig) {
       throw new NotFoundError();
     }
+    // Check if the authenticated user is the owner of the gig or has the role of admin
 
     res.send(gig);
   }

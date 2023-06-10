@@ -1,18 +1,47 @@
 import mongoose from "mongoose";
 import { Password } from "../services/password";
 
-interface userAttrs {
+interface UserAttrs {
   email: string;
   password: string;
+
+  firstName: string;
+  lastName: string;
+  username: string;
+  phoneNumber: string;
+  location: string;
+  biography: string;
+  categorie: string;
+  portfolio: Array<PortfolioItem>;
+  role: "artisan" | "client" | "admin";
+  belongsTo: string;
+  createdTheProfile: string;
+  banned: boolean;
 }
 
 interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: userAttrs): UserDoc;
+  build(attrs: UserAttrs): UserDoc;
+}
+interface PortfolioItem {
+  image: string;
+  description: string;
 }
 
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  phoneNumber: string;
+  location: string;
+  biography: string;
+  categorie: string;
+  portfolio: Array<PortfolioItem>;
+  role: ["artisan", "client", "admin"];
+  belongsTo: string;
+  createdTheProfile: string;
+  banned: boolean;
 }
 
 const userSchema = new mongoose.Schema(
@@ -24,6 +53,64 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    belongsTo: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["artisan", "client", "admin"],
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    categorie: {
+      type: String,
+      required: true,
+    },
+    portfolio: [
+      {
+        image: {
+          type: String,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    createdTheProfile: {
+      type: String,
+      required: true,
+    },
+    biography: {
+      type: String,
+      required: true,
+    },
+    banned: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   {
@@ -45,7 +132,7 @@ userSchema.pre("save", async function (done) {
   done();
 });
 
-userSchema.statics.build = (attrs: userAttrs) => {
+userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 

@@ -28,17 +28,18 @@ router.post(
       password
     );
     if (!passwordMatch) {
-      throw new BadRequestError("invalid crednetials");
+      throw new BadRequestError("invalid credentials");
     }
 
     const userJwt = jwt.sign(
       {
         id: existingUser.id,
         email: existingUser.email,
+        role: existingUser.role, // Include the role in the JWT payload
       },
       process.env.JWT_KEY!
     );
-    // store it on session object
+
     req.session = {
       jwt: userJwt,
     };
