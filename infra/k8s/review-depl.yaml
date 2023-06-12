@@ -14,15 +14,15 @@ spec:
     spec:
       containers:
         - name: review
-          image: zaouiamine/review
+          image: malakboudaa/review
           env:
             - name: MONGO_URI
               value: "mongodb://review-mongo-srv:27017/review"
-            # - name: JWT_KEY
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: jwt-secret
-            #       key: JWT_KEY
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service

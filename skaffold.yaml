@@ -40,7 +40,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: zaouiamine/admin
+    - image: malakboudaa/admin
       context: admin
       docker:
         dockerfile: Dockerfile
@@ -48,7 +48,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: zaouiamine/review
+    - image: malakboudaa/review
       context: review
       docker:
         dockerfile: Dockerfile

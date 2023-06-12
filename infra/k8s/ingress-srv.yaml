@@ -30,7 +30,35 @@ spec:
               service:
                 name: gig-srv
                 port:
-                  number: 3000                  
+                  number: 3000     
+          - path: /api/reviews/?(.*)
+            pathType: Prefix # Specify the pathType as Prefix
+            backend:
+              service:
+                name: review-srv
+                port:
+                  number: 3000  
+          - path: /api/bans/?(.*)
+            pathType: Prefix # Specify the pathType as Prefix
+            backend:
+              service:
+                name: admin-srv
+                port:
+                  number: 3000   
+          - path: /api/reports/?(.*)
+            pathType: Prefix # Specify the pathType as Prefix
+            backend:
+              service:
+                name: admin-srv
+                port:
+                  number: 3000 
+          - path: /api/categories/?(.*)
+            pathType: Prefix # Specify the pathType as Prefix
+            backend:
+              service:
+                name: admin-srv
+                port:
+                  number: 3000       
           - path: /?(.*)
             pathType: Prefix # Specify the pathType as Prefix
             backend:
