@@ -4,7 +4,6 @@ import { Password } from "../services/password";
 interface UserAttrs {
   email: string;
   password: string;
-
   firstName: string;
   lastName: string;
   username: string;
