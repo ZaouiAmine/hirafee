@@ -3,7 +3,15 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      # - ./infra/k8s/*
+      - ./infra/k8s/auth-mongo-depl.yaml
+      - ./infra/k8s/auth-depl.yaml
+      - ./infra/k8s/gig-mongo-depl.yaml
+      - ./infra/k8s/gig-depl.yaml
+      - ./infra/k8s/admin-mongo-depl.yaml
+      - ./infra/k8s/admin-depl.yaml
+
+      - ./infra/k8s/client-depl.yaml
 build:
   local:
     push: false
@@ -24,14 +32,14 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: zaouiamine/profile
-      context: profile
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
+    # - image: zaouiamine/profile
+    #   context: profile
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "src/**/*.ts"
+    #         dest: .
     - image: zaouiamine/gig
       context: gig
       docker:
@@ -48,11 +56,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: zaouiamine/review
-      context: review
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
+    # - image: zaouiamine/review
+    #   context: review
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "src/**/*.ts"
+    #         dest: .

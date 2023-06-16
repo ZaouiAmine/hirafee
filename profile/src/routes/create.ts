@@ -1,4 +1,9 @@
-import { requireAuth, validateRequest } from "@hirafee-platforme/common/build";
+import {
+  requireAuth,
+  validateRequest,
+  RequestValidationError,
+} from "@hirafee-platforme/common/build";
+import { validationResult } from "express-validator";
 import { body } from "express-validator";
 import express, { Request, Response } from "express";
 import { Profile } from "../models/profile";
@@ -59,6 +64,11 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    console.log("building client");
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
     const {
       email,
       role,
