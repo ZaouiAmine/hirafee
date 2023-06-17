@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import {
   requireAuth,
   requireRole,
   validateRequest,
+  RequestValidationError,
 } from "@hirafee-platforme/common";
 import { body } from "express-validator";
 import { Report } from "../models/report";
@@ -29,6 +31,11 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    console.log("building client");
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
     const { type, reportedItemId, reason, state } = req.body;
 
     const report = Report.build({

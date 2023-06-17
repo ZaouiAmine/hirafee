@@ -3,7 +3,15 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      # - ./infra/k8s/*
+      - ./infra/k8s/auth-mongo-depl.yaml
+      - ./infra/k8s/auth-depl.yaml
+      - ./infra/k8s/gig-mongo-depl.yaml
+      - ./infra/k8s/gig-depl.yaml
+      - ./infra/k8s/admin-mongo-depl.yaml
+      - ./infra/k8s/admin-depl.yaml
+
+      - ./infra/k8s/client-depl.yaml
 build:
   local:
     push: false
@@ -24,14 +32,6 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: malakboudaa/profile
-      context: profile
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
     - image: malakboudaa/gig
       context: gig
       docker:
@@ -42,14 +42,6 @@ build:
             dest: .
     - image: malakboudaa/admin
       context: admin
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
-    - image: malakboudaa/review
-      context: review
       docker:
         dockerfile: Dockerfile
       sync:

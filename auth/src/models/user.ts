@@ -13,8 +13,8 @@ interface UserAttrs {
   categorie: string;
   portfolio: Array<PortfolioItem>;
   role: "artisan" | "client" | "admin";
-  belongsTo: string;
-  createdTheProfile: string;
+  // belongsTo: string;
+  // createdTheProfile: string;
   banned: boolean;
 }
 
@@ -38,8 +38,8 @@ interface UserDoc extends mongoose.Document {
   categorie: string;
   portfolio: Array<PortfolioItem>;
   role: ["artisan", "client", "admin"];
-  belongsTo: string;
-  createdTheProfile: string;
+  // belongsTo: string;
+  // createdTheProfile: string;
   banned: boolean;
 }
 
@@ -53,10 +53,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    belongsTo: {
-      type: String,
-      required: true,
-    },
+    // belongsTo: {
+    //   type: String,
+    //   required: true,
+    // },
     role: {
       type: String,
       enum: ["artisan", "client", "admin"],
@@ -98,10 +98,10 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
-    createdTheProfile: {
-      type: String,
-      required: true,
-    },
+    // createdTheProfile: {
+    //   type: String,
+    //   required: true,
+    // },
     biography: {
       type: String,
       required: true,

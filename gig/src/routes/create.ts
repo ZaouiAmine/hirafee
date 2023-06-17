@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import {
   requireAuth,
   requireRole,
   validateRequest,
+  RequestValidationError,
 } from "@hirafee-platforme/common";
 import { body } from "express-validator";
 import { Gig } from "../models/gig";
@@ -25,11 +27,19 @@ router.post(
       .withMessage("Budget must be a positive number"),
     body("location").not().isEmpty().withMessage("Location is required"),
     body("category").not().isEmpty().withMessage("Category is required"),
-    body("requirements").isArray().withMessage("Requirements must be an array"),
+    body("requirements")
+      .not()
+      .isEmpty()
+      .withMessage("Requirements must be full"),
     body("proposals").isArray().withMessage("Requirements must be an array"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    console.log("building client");
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
     const { title, description, budget, location, category, requirements } =
       req.body;
     const gigs = Gig.build({

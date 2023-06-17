@@ -1,0 +1,105 @@
+import buildClient from "../api/build-client";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import "../styles/globals.css";
+
+const AppComponent = ({ Component, pageProps, currentUser }) => {
+  // let currentUser = {
+  //   role: "admin",
+  // };
+  // let currentUsero = null;
+
+  let links;
+
+  let adminLinks = [
+    { label: "Bans", href: "/admin/bans" },
+    { label: "Reports", href: "/admin/reports" },
+    { label: "Categories", href: "/admin/categories" },
+  ];
+  let clientLinks = [
+    { label: "Gigs", href: "/client/gigs" },
+    { label: "Artisans", href: "/client/artisans" },
+    { label: "Messages", href: "/client/messages" },
+  ];
+  let artisanLinks = [
+    { label: "Gigs", href: "/artisan/gigs" },
+    { label: "Messages", href: "/artisan/messages" },
+  ];
+  let visitorLinks = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ];
+
+  if (currentUser) {
+    switch (currentUser.role) {
+      case "admin":
+        links = adminLinks;
+        break;
+      case "client":
+        links = clientLinks;
+        break;
+      case "artisan":
+        links = artisanLinks;
+        break;
+    }
+  } else {
+    links = visitorLinks;
+  }
+
+  let btns;
+  let signedOutBtns = [
+    {
+      label: "signin",
+      type: "link",
+      href: "/auth/signin",
+      className:
+        "btn py-2 px-4 text-green-500 hover:bg-green-500 hover:text-white rounded border border-green-500",
+    },
+    {
+      label: "signup",
+      type: "link",
+      href: "/auth/signup",
+      className:
+        "btn py-2 px-4 bg-green-500 text-white border border-green-500 hover:bg-white hover:text-green-500 rounded",
+    },
+  ];
+
+  let signedUpBtns = [
+    {
+      label: "signout",
+      type: "btn",
+      href: "/auth/signout",
+      className:
+        "btn py-2 px-4 text-green-500 hover:bg-green-500 hover:text-white rounded border border-green-500",
+    },
+  ];
+
+  if (currentUser) {
+    btns = signedUpBtns;
+  } else {
+    btns = signedOutBtns;
+  }
+
+  return (
+    <>
+      <NavBar links={links} btns={btns} />
+      <Component {...pageProps} currentUser={currentUser} />
+      <Footer />
+    </>
+  );
+};
+
+AppComponent.getInitialProps = async (appContext) => {
+  const { data } = await buildClient(appContext.ctx).get(
+    "/api/users/currentuser"
+  );
+  let pageProps = {};
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+  }
+  console.log(data);
+  return { pageProps, ...data };
+};
+
+export default AppComponent;

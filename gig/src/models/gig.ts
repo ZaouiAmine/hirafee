@@ -9,7 +9,7 @@ interface GigAttrs {
   category: string;
   proposals: string[];
   takenBy: string;
-  requirements: string[];
+  requirements: string;
   banned: boolean;
 }
 
@@ -26,7 +26,7 @@ interface GigDoc extends mongoose.Document {
   category: string;
   proposals: string[];
   takenBy: string;
-  requirements: string[];
+  requirements: string;
   banned: boolean;
 }
 
@@ -62,7 +62,7 @@ const gigSchema = new mongoose.Schema(
       required: true,
     },
     requirements: {
-      type: [String],
+      type: String,
       required: true,
     },
     proposals: {

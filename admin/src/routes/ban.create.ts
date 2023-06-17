@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import {
   requireAuth,
   requireRole,
   validateRequest,
+  RequestValidationError,
 } from "@hirafee-platforme/common";
 import { body } from "express-validator";
 import { Ban } from "../models/ban";
@@ -21,6 +23,11 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    console.log("building client");
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
     const { userId, reason } = req.body;
 
     const ban = Ban.build({

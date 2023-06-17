@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "@hirafee-platforme/common";
+import { RequestValidationError, currentUser } from "@hirafee-platforme/common";
 import { User } from "../models/user";
 import { BadRequestError } from "@hirafee-platforme/common";
 
@@ -29,22 +29,10 @@ router.post(
     body("location").notEmpty().withMessage("Location is required"),
     body("biography").notEmpty().withMessage("Biography is required"),
     body("categorie").notEmpty().withMessage("Category is required"),
-    // body("portfolio").isArray().withMessage("Portfolio must be an array"),
-    // body("portfolio.*.image")
-    //   .notEmpty()
-    //   .withMessage("Portfolio item image is required"),
-    // body("portfolio.*.description")
-    //   .notEmpty()
-    //   .withMessage("Portfolio item description is required"),
-    body("belongsTo").notEmpty().withMessage("Belongs to is required"),
-
-    body("createdTheProfile")
-      .notEmpty()
-      .withMessage("Created the profile is required"),
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
-
+    console.log("building client");
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
@@ -59,10 +47,8 @@ router.post(
       location,
       biography,
       categorie,
-      // portfolio,
+
       role,
-      belongsTo,
-      createdTheProfile,
     } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -83,12 +69,12 @@ router.post(
       categorie,
       portfolio: [],
       role,
-      belongsTo,
-      createdTheProfile,
+
       banned: false,
     });
 
     await user.save();
+    console.log("saved");
 
     const userJwt = jwt.sign(
       {
