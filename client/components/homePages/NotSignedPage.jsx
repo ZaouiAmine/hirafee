@@ -2,7 +2,10 @@ import Link from "next/link";
 
 const NotSignedPage = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main
+      id="notSignedInBg"
+      className="min-h-screen flex flex-col items-center justify-center"
+    >
       <div className="container p-6">
         <h1 className="text-gray-900 font-extrabold text-5xl sm:text-7xl text-center my-16">
           WELCOME TO<span className="text-green-500"> HIRAFEE</span>

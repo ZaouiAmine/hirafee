@@ -19,7 +19,6 @@ router.post(
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("description").not().isEmpty().withMessage("Description is required"),
-    body("clientId").not().isEmpty().withMessage("clientId is required"),
     body("budget")
       .isNumeric()
       .withMessage("Budget must be a number")
@@ -31,7 +30,6 @@ router.post(
       .not()
       .isEmpty()
       .withMessage("Requirements must be full"),
-    body("proposals").isArray().withMessage("Requirements must be an array"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {

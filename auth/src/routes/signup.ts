@@ -47,7 +47,6 @@ router.post(
       location,
       biography,
       categorie,
-
       role,
     } = req.body;
 
@@ -69,7 +68,6 @@ router.post(
       categorie,
       portfolio: [],
       role,
-
       banned: false,
     });
 
@@ -81,6 +79,14 @@ router.post(
         id: user.id,
         email: user.email,
         role: user.role,
+        // Add additional attributes here
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        phoneNumber: user.phoneNumber,
+        location: user.location,
+        biography: user.biography,
+        categorie: user.categorie,
       },
       process.env.JWT_KEY!
     );
