@@ -12,7 +12,7 @@ const router = express.Router();
 router.put(
   "/api/profiles/:id",
   requireAuth,
-  requireRole("admin"),
+  requireRole("admin",'artisan'),
   async (req: Request, res: Response) => {
     const profileId = req.params.id;
     const {
@@ -37,10 +37,7 @@ router.put(
       throw new NotFoundError();
     }
 
-    // Only allow admins to update the profile
-    if (req.currentUser!.role !== "admin") {
-      throw new NotAuthorizedError();
-    }
+   
 
     // Update only the provided fields
     if (email) profile.email = email;

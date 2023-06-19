@@ -24,10 +24,7 @@ router.post(
       .notEmpty()
       .withMessage("Reported item ID is required"),
     body("reason").notEmpty().withMessage("Reason is required"),
-    body("state")
-      .notEmpty()
-      .isIn(["processed", "unprocessed"])
-      .withMessage("Invalid report state"),
+
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -42,7 +39,7 @@ router.post(
       type,
       reportedItemId,
       reason,
-      state,
+      state : "unprocessed",
       createdAt: new Date(),
     });
 

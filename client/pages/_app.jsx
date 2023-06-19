@@ -30,6 +30,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   ];
   let visitorLinks = [
     { label: "Home", href: "/" },
+    { label: "Artisans", href: "/artisans" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ];
