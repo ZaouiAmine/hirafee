@@ -3,17 +3,14 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
-      # - ./infra/k8s/auth-mongo-depl.yaml
-      # - ./infra/k8s/auth-depl.yaml
-      # - ./infra/k8s/gig-mongo-depl.yaml
-      # - ./infra/k8s/gig-depl.yaml
-      # - ./infra/k8s/admin-mongo-depl.yaml
-      # - ./infra/k8s/admin-depl.yaml
-      # - ./infra/k8s/profile-mongo-depl.yaml
-      # - ./infra/k8s/profile-depl.yaml
-
-      # - ./infra/k8s/client-depl.yaml
+      - ./infra/k8s/auth-mongo-depl.yaml
+      - ./infra/k8s/auth-depl.yaml
+      - ./infra/k8s/gig-mongo-depl.yaml
+      - ./infra/k8s/gig-depl.yaml
+      - ./infra/k8s/admin-mongo-depl.yaml
+      - ./infra/k8s/admin-depl.yaml
+      - ./infra/k8s/profile-mongo-depl.yaml
+      - ./infra/k8s/profile-depl.yaml
 build:
   local:
     push: false
@@ -25,14 +22,6 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
-            dest: .
-    - image: zaouiamine/client
-      context: client
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "**/*.js"
             dest: .
     - image: zaouiamine/profile
       context: profile

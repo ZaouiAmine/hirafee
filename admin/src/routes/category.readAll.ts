@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
   "/api/categories",
-  requireAuth,
+
   async (req: Request, res: Response) => {
     const categories = await Category.find();
 

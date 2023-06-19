@@ -12,7 +12,7 @@ const router = express.Router();
 router.put(
   "/api/gigs/:id",
   requireAuth,
-  requireRole("client"),
+  requireRole("client", "artisan"),
   async (req: Request, res: Response) => {
     const gigId = req.params.id;
     const {
@@ -32,13 +32,6 @@ router.put(
 
     if (!gig) {
       throw new NotFoundError();
-    }
-
-    if (
-      gig.clientId.toString() !== req.currentUser!.id &&
-      req.currentUser!.role !== "admin"
-    ) {
-      throw new NotAuthorizedError();
     }
 
     // Update only the provided fields

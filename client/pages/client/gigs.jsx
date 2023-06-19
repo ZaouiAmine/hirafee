@@ -11,7 +11,8 @@ const gigs = ({ currentUser }) => {
   const [requirements, setRequirements] = useState("");
 
   const [count, setCount] = useState(1);
-  const [data, setData] = useState(null);
+  const [gigsData, setGigsData] = useState([]);
+  const [catsData, setCatsData] = useState([]);
 
   const { doRequest: addGig, errors: addErrors } = useRequest({
     url: "/api/gigs",
@@ -50,7 +51,7 @@ const gigs = ({ currentUser }) => {
         const filteredData = response.data.filter(
           (gig) => gig.clientId === currentUser.id
         );
-        setData(filteredData);
+        setGigsData(filteredData);
         console.log(filteredData);
       } catch (error) {
         // Handle any errors that occur during the API request
@@ -59,6 +60,20 @@ const gigs = ({ currentUser }) => {
     };
 
     fetchData(); // Call the async function to fetch data
+
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories");
+        const data = await response.json();
+        setCatsData(data);
+        setCategory(data[0]?.name || "");
+        console.log(data);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, [count]);
   return (
     <main className="min-h-screen flex justify-center">
@@ -117,7 +132,7 @@ const gigs = ({ currentUser }) => {
                 />
               </div>
 
-              <div className="">
+              {/* <div className="">
                 <input
                   type="text"
                   className="w-full  p-2  placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -128,6 +143,32 @@ const gigs = ({ currentUser }) => {
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 />
+              </div> */}
+
+              <div className="">
+                <select
+                  id="category"
+                  name="category"
+                  required
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {catsData.length === 0 && (
+                    <option value="nocats">Select Category</option>
+                  )}
+
+                  {catsData.length > 0 && (
+                    <>
+                      <option value="">Select Category</option>
+                      {catsData.map((category) => (
+                        <option key={category.id} value={category.name}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
               </div>
               <div className="">
                 <textarea
@@ -154,8 +195,8 @@ const gigs = ({ currentUser }) => {
 
           <div className="w-136 p-4 rounded-lg border flex flex-col gap-4 ">
             <h1 className="text-xl font-bold text-gray-500 m-2">Gig's List</h1>
-            {data != null &&
-              data.map((gig) => {
+            {gigsData != null &&
+              gigsData.map((gig) => {
                 return (
                   <div
                     key={gig.id}
