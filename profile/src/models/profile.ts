@@ -11,8 +11,8 @@ interface ProfileAttrs {
   categorie: string;
   portfolio: Array<PortfolioItem>;
   role: "artisan" | "client" | "admin";
-  belongsTo: mongoose.Types.ObjectId;
-  createdTheProfile: mongoose.Types.ObjectId;
+  belongsTo: string;
+  createdTheProfile: string;
   banned: boolean;
 }
 
@@ -22,17 +22,17 @@ interface ProfileModel extends mongoose.Model<ProfileDoc> {
 
 interface ProfileDoc extends mongoose.Document {
   email: string;
-  belongsTo: mongoose.Types.ObjectId;
   role: ["admin", "aritisan", "client"];
   firstName: string;
   lastName: string;
   username: string;
   phoneNumber: string;
   location: string;
+  biography: string;
   categorie: string;
   portfolio: Array<PortfolioItem>;
-  createdTheProfile: mongoose.Types.ObjectId;
-  biography: string;
+  belongsTo: string;
+  createdTheProfile: string;
   banned: boolean;
 }
 
@@ -48,7 +48,7 @@ const profileSchema = new mongoose.Schema(
       required: true,
     },
     belongsTo: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true,
     },
     role: {
@@ -93,7 +93,7 @@ const profileSchema = new mongoose.Schema(
       },
     ],
     createdTheProfile: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true,
     },
     biography: {

@@ -5,7 +5,10 @@ import "../styles/globals.css";
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   // let currentUser = {
-  //   role: "admin",
+  //   id: "648c987849dbaeaea7ba3f3b",
+  //   email: "ryvuf@mailinator.com",
+  //   role: "client",
+  //   iat: 1686935673,
   // };
   // let currentUsero = null;
 

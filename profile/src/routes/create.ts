@@ -2,6 +2,7 @@ import {
   requireAuth,
   validateRequest,
   RequestValidationError,
+  currentUser,
 } from "@hirafee-platforme/common/build";
 import { validationResult } from "express-validator";
 import { body } from "express-validator";
@@ -65,7 +66,7 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
-    console.log("building client");
+    console.log("building profile");
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
@@ -80,7 +81,7 @@ router.post(
       phoneNumber,
       location,
       portfolio,
-      createdTheProfile,
+
       belongsTo,
     } = req.body;
     const profile = Profile.build({
@@ -94,8 +95,8 @@ router.post(
       phoneNumber,
       location,
       belongsTo,
-      createdTheProfile,
       portfolio,
+      createdTheProfile: req.currentUser!.id,
       banned: false,
     });
     await profile.save();

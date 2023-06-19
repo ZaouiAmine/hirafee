@@ -17,3 +17,8 @@
 .error-div-li {
   color: rgb(255, 65, 65);
 }
+
+#notSignedInBg {
+  background-image: url("../public/bg.png");
+  background-repeat: no-repeat;
+}

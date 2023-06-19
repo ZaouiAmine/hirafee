@@ -1,8 +1,16 @@
 import Link from "next/link";
+import Image from 'next/image';
+import paintre from '../homePages/maçon.jpg';
+import maçon from '../homePages/paintre.jpg';
+import plombier from '../homePages/plombier.jpg';
+
 
 const NotSignedPage = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center">
+    <main
+      id="notSignedInBg"
+      className="min-h-screen flex flex-col items-center justify-center"
+    >
       <div className="container p-6">
         <h1 className="text-gray-900 font-extrabold text-5xl sm:text-7xl text-center my-16">
           WELCOME TO<span className="text-green-500"> HIRAFEE</span>
@@ -19,6 +27,16 @@ const NotSignedPage = () => {
           solution.
         </p>
       </div>
+
+            <div className="flex justify-center items-center">
+        <div className="flex">
+          <Image src={paintre} alt="Image 1" width={200} height={200} className="mx-2" />
+          <Image src={plombier} alt="Image 2" width={200} height={200} className="mx-2" />
+          <Image src={maçon} alt="Image 3" width={200} height={200} className="mx-2" />
+          
+        </div>
+      </div>
+
 
       <Link
         href="/auth/signup"

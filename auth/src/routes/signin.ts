@@ -36,6 +36,13 @@ router.post(
         id: existingUser.id,
         email: existingUser.email,
         role: existingUser.role, // Include the role in the JWT payload
+        firstName: existingUser.firstName, // Add additional attributes here
+        lastName: existingUser.lastName,
+        username: existingUser.username,
+        phoneNumber: existingUser.phoneNumber,
+        location: existingUser.location,
+        biography: existingUser.biography,
+        categorie: existingUser.categorie,
       },
       process.env.JWT_KEY!
     );
