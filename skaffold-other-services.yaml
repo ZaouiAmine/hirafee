@@ -11,6 +11,7 @@ deploy:
       - ./infra/k8s/admin-depl.yaml
       - ./infra/k8s/profile-mongo-depl.yaml
       - ./infra/k8s/profile-depl.yaml
+      - ./infra/k8s/nats-depl.yaml
 build:
   local:
     push: false
