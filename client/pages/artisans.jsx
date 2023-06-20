@@ -23,11 +23,8 @@ const Artisans = () => {
   return (
     <div>
       {artisans.map((artisan) => (
-        <div
-          key={artisan.id}
-          className="bg-green-500 text-black py-2 px-4 mb-2 rounded"
-        >
-          {artisan.name}
+        <div key={artisan.id} className="border border-gray-200">
+          {artisan.username}
         </div>
       ))}
     </div>
