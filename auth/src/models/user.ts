@@ -84,7 +84,7 @@ const userSchema = new mongoose.Schema(
     },
     categorie: {
       type: String,
-      required: true,
+      required: false,
     },
     portfolio: [
       {

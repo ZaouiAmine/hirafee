@@ -42,4 +42,4 @@ stan.on('close', () =>{
 
 //add two handlers to handle the close of the process
 process.on('SIGINT', () => stan.close());
-process.on('SIGTERM', () => stan.close());
+process.on('SIGTERM', () => stan.close()); 
