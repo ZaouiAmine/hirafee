@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
+
 // require("dotenv").config();
 
 const start = async () => {
@@ -10,8 +12,18 @@ const start = async () => {
   if (!process.env.MONGO_URI) {
     throw new Error("mongo env key not defined");
   }
+
+  await natsWrapper.connect('hirafee', 'blabla', 'http://nats-srv:4222');
+  natsWrapper.client.on('close', () => {
+    console.log('NATS connection closed');
+    process.exit();
+  });
+    process.on('SIGINT', ()=> natsWrapper.client.close());
+    process.on('SIGTERM', ()=> natsWrapper.client.close());
+
+
   try {
-    mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("connected to db");
   } catch (error) {
     console.error(error);

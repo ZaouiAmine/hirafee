@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-
 import { body, validationResult } from "express-validator";
 import { RequestValidationError, currentUser } from "@hirafee-platforme/common";
 import { User } from "../models/user";
 import { BadRequestError } from "@hirafee-platforme/common";
+import { UserCreatedPublisher } from "../events/publishers/user-created-publisher";
+import { natsWrapper } from "../nats-wrapper";
+
 
 const router = express.Router();
 
@@ -73,6 +75,18 @@ router.post(
 
     await user.save();
     console.log("saved");
+
+     //put our publisher 
+    // with the getter on natswrapper 
+    new UserCreatedPublisher(natsWrapper.client).publish({
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      location: user.location,
+      biography: user.biography,
+      categorie: user.categorie,
+     });
 
     const userJwt = jwt.sign(
       {
