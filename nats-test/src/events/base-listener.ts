@@ -1,11 +1,19 @@
 
-import nats, {Message, Stan} from 'node-nats-streaming';
+import {Message, Stan} from 'node-nats-streaming';
+import { Subjects } from './subjects';
+
+// if our event has data, its going to be this in this subjects
+interface Event {
+  subject: Subjects;
+  data: any;
+}
 
 // add an abstract class to easily create listners
-export abstract class Listener {
-    abstract subject: string;
+// as a type "T"
+export abstract class Listener <T extends Event> {
+    abstract subject: T['subject'];
     abstract queueGroupName: string;
-    abstract onMessage(data: any, msg: Message): void;
+    abstract onMessage(data: T['data'], msg: Message): void;
     private client: Stan;
     protected ackWait = 5 * 1000;
   

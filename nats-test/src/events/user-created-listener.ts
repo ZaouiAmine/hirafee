@@ -1,16 +1,23 @@
 import { Message } from "node-nats-streaming";
 import { Listener } from "./base-listener";
+import { Subjects } from "./subjects";
+import { UserCreatedEvent } from "./user-created-event";
 
+export class UserCreatedListener extends Listener <UserCreatedEvent> {
+    subject: Subjects.UserCreated= Subjects.UserCreated ;
+    queueGroupName= 'profile-service'; 
 
-export class UserCreatedListener extends Listener {
-    subject = 'user:created';
-    queueGroupName= 'profile-service';
-  
-  
-    onMessage(data: any, msg: Message): void {
+    onMessage(data: UserCreatedEvent['data'], msg: Message): void {
+
       console.log('Event data!!!', data);
-  
+      console.log(data.userId)
+      console.log(data.firstName)
+      console.log(data.phoneNumber)
+      console.log(data.location)
+      console.log(data.biography)
+      console.log(data.categorie)
+
       msg.ack(); //acknowledge incoming msgs
-    }
-  
+    } 
   }
+  
