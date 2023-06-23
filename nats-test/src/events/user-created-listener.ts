@@ -10,7 +10,8 @@ export class UserCreatedListener extends Listener <UserCreatedEvent> {
     onMessage(data: UserCreatedEvent['data'], msg: Message): void {
 
       console.log('Event data!!!', data);
-      console.log(data.userId)
+      console.log(data.email)
+      console.log(data.lastName)
       console.log(data.firstName)
       console.log(data.phoneNumber)
       console.log(data.location)

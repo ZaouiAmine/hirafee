@@ -12,9 +12,9 @@ stan.on('connect', async () => {
 try {
 
   await publisher.publish({
-    userId: '1',
-    firstName: 'malak',
-    lastName: 'boudaa',
+    email: 'hirafee@hirafee.com',
+    firstName: 'hirafeee',
+    lastName: 'hir',
     phoneNumber: '0556882069',
     location: 'Constantine',
     biography: 'Je suis paintre expérimenté ',
