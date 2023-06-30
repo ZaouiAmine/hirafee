@@ -1,6 +1,17 @@
 import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
+//import { natsWrapper } from "../../nats-wrapper";
+ jest.mock('../../nats-wrapper');
+
+// beforeAll(async () => {
+//   await natsWrapper.connect('your-cluster-id', 'your-client-id', 'nats://localhost:4222');
+// });
+
+// afterAll(async () => {
+//   await natsWrapper.client.close();
+// });
+
 const fakeId = new mongoose.Types.ObjectId();
 
 it("returns a 201 on successful signup", async () => {
