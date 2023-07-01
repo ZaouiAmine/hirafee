@@ -79,7 +79,7 @@ router.post(
         id: user.id,
         email: user.email,
         role: user.role,
-        // Add additional attributes here
+        banned:user.banned,
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useRequest from "@/hooks/use-request";
 import Router from "next/router";
+import Link from "next/link";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,8 @@ const Signup = () => {
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("no-cat");
   const [role, setRole] = useState("");
+
+  let user;
 
   const { doRequest, errors } = useRequest({
     url: "/api/users/signup",
@@ -51,15 +54,40 @@ const Signup = () => {
     fetchCategories();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    doRequest();
+    user = await doRequest();
+    fetch("/api/profiles", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        belongsTo: user?.id,
+        portfolio: [],
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        phoneNumber: phoneNumber,
+        location: location,
+        biography: biography,
+        categorie: selectedCategory,
+        role: role,
+      }),
+    })
+      .then((response) => {
+        // Handle the response
+      })
+      .catch((error) => {
+        // Handle the error
+      });
   };
 
   return (
-    <main className="py-3 flex justify-center">
+    <main className="py-3 flex justify-center min-h-screen items-center">
       <div className="container p-6 my-10  flex flex-col items-center">
-        <h1 className="text-5xl font-extrabold text-gray-700 mb-4">Sign Up</h1>
+        <h1 className="text-3xl font-extrabold text-gray-700 mb-4">Sign Up</h1>
         <div className="w-full md:w-4/5 lg:w-3/5 xl:w-2/5 ">
           <form onSubmit={handleSubmit}>
             <div className="m-4">
@@ -69,12 +97,22 @@ const Signup = () => {
                 required
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
               >
-                <option value="">Select Role</option>
-                <option value="client">Client</option>
-                <option value="artisan">Artisan</option>
-                <option value="admin">Admin</option>
+                <option value="" disabled hidden>
+                  Select Role
+                </option>
+                <optgroup label="Roles">
+                  <option value="client" className="py-2 px-4">
+                    Client
+                  </option>
+                  <option value="artisan" className="py-2 px-4">
+                    Artisan
+                  </option>
+                  <option value="admin" className="py-2 px-4">
+                    Admin
+                  </option>
+                </optgroup>
               </select>
             </div>
 
@@ -87,7 +125,7 @@ const Signup = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -100,7 +138,7 @@ const Signup = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -113,7 +151,7 @@ const Signup = () => {
                 placeholder="First Name"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -126,7 +164,7 @@ const Signup = () => {
                 placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -139,7 +177,7 @@ const Signup = () => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -152,7 +190,7 @@ const Signup = () => {
                 placeholder="Phone Number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -165,7 +203,7 @@ const Signup = () => {
                 placeholder="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -177,7 +215,7 @@ const Signup = () => {
                 placeholder="Biography"
                 value={biography}
                 onChange={(e) => setBiography(e.target.value)}
-                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               ></textarea>
             </div>
 
@@ -189,7 +227,7 @@ const Signup = () => {
                   required
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {data.length === 0 && (
                     <option value="nocats">Select Category</option>
@@ -213,8 +251,14 @@ const Signup = () => {
               <input
                 type="submit"
                 value="Sign Up"
-                className="w-full px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600"
+                className="w-full px-4 py-2 text-white bg-secondary rounded-full hover:bg-white cursor-pointer  border border-secondary hover:text-secondary"
               />
+            </div>
+            <div className="m-4 flex gap-4">
+              <p className="text-gray-400 text-md">Already signed up ? </p>
+              <Link className="text-blue-500" href="/auth/signin">
+                Signin
+              </Link>
             </div>
           </form>
           {errors}

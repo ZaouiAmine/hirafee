@@ -10,7 +10,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   //   role: "client",
   //   iat: 1686935673,
   // };
-  // let currentUsero = null;
+  // let currentUser = null;
 
   let links;
 
@@ -58,14 +58,14 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
       type: "link",
       href: "/auth/signin",
       className:
-        "btn py-2 px-4 text-green-500 hover:bg-green-500 hover:text-white rounded border border-green-500",
+        "text-secondary rounded-full hover:bg-gray-100 font-semibold py-2 px-6",
     },
     {
       label: "signup",
       type: "link",
       href: "/auth/signup",
       className:
-        "btn py-2 px-4 bg-green-500 text-white border border-green-500 hover:bg-white hover:text-green-500 rounded",
+        "bg-secondary text-white font-semibold py-2 px-6 rounded-full border border-secondary hover:bg-white hover:text-secondary",
     },
   ];
 
@@ -75,7 +75,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
       type: "btn",
       href: "/auth/signout",
       className:
-        "btn py-2 px-4 text-green-500 hover:bg-green-500 hover:text-white rounded border border-green-500",
+        "text-secondary border border-secondary rounded-full hover:bg-gray-100 font-semibold py-2 px-6",
     },
   ];
 

@@ -8,6 +8,7 @@ import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 import { errorHandler } from "@hirafee-platforme/common";
 import { NotFoundError } from "@hirafee-platforme/common";
+import { router } from "./routes/crud";
 
 const app = express();
 app.set("trust proxy", true);
@@ -24,6 +25,7 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+app.use(router);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

@@ -28,7 +28,7 @@ const ArtisanProfile = () => {
   }
 
   return (
-    <main className="min-h-screen flex justify-center gap-4 p-4">
+    <main className="min-h-screen flex justify-center gap-4 p-4 pt-16">
       <div className="container flex justify-center items-start flex-wrap">
         <div className="border rounded-lg p-4 maxw-136">
           <h2 className="text-2xl font-bold mb-4">{artisanProfile.username}</h2>

@@ -68,7 +68,7 @@ const Categories = () => {
   }, [count]);
 
   return (
-    <main className="flex justify-center">
+    <main className="flex justify-center p-4 pt-16">
       <div className="container min-h-screen flex flex-col items-center ">
         <div className="w-full h-full sm:w-2/3 md:w-3/5 lg:w-3/5 xl:w-2/5">
           <h1 className="text-gray-500 font-bold m-5 text-xxl">Categories</h1>
