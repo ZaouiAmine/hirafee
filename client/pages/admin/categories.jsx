@@ -8,6 +8,7 @@ const Categories = () => {
   const [data, setData] = useState(null);
   const [editCategory, setEditCategory] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const { doRequest: addCat, errors: addErrors } = useRequest({
     url: "/api/categories",
@@ -69,9 +70,59 @@ const Categories = () => {
 
   return (
     <main className="flex justify-center p-4 pt-16">
-      <div className="container min-h-screen flex flex-col items-center ">
+      {/* Drawer */}
+      <div className={`fixed top-20 left-0 w-64 h-screen bg-secondary text-white ${isDrawerOpen ? "" : "hidden"}`}>
+        <ul className="py-4 px-2">
+          <li className="py-2">
+            <button
+              className="w-full text-left text-white hover:text-gray-300"
+              onClick={() => setIsDrawerOpen(false)} >
+              Close Drawer
+            </button>
+          </li>
+          <li className="py-2">
+          <a href="/admin/bans" className="w-full text-left text-white hover:text-gray-300">
+           Bans 
+           </a>
+          </li>
+          <li className="py-2">
+          <a href="/admin/reports" className="w-full text-left text-white hover:text-gray-300">
+           Reports
+           </a>
+          </li>
+          <li className="py-2">
+          <a href="/admin/categories" className="w-full text-left text-white hover:text-gray-300">
+           Categories
+           </a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="container min-h-screen flex flex-col items-center">
         <div className="w-full h-full sm:w-2/3 md:w-3/5 lg:w-3/5 xl:w-2/5">
-          <h1 className="text-gray-500 font-bold m-5 text-xxl">Categories</h1>
+          {/* Header */}
+          <div className="flex justify-between items-center mb-8">
+            <button
+              className="text-gray-500 hover:text-gray-700"
+              onClick={() => setIsDrawerOpen(true)}
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <h1 className="text-gray-500 font-bold text-2xl">Categories</h1>
+            <div className="w-6"></div>
+          </div>
+
+          {/* Category List */}
           <div className="w-full border rounded-md hover:shadow-md m-4">
             <form className="flex" onSubmit={handleSubmit}>
               <div className="my-4 ml-4 mr-2 w-5/6">
@@ -101,7 +152,7 @@ const Categories = () => {
               return (
                 <div
                   key={cat.id}
-                  className="w-full border rounded-md hover:shadow-md m-4 "
+                  className="w-full border rounded-md hover:shadow-md m-4"
                 >
                   <form
                     className="flex items-center"

@@ -50,7 +50,7 @@ const Messages = ({ currentUser }) => {
           <div className="justify-center gap-4 flex flex-wrap">
             {currentMessages &&
               currentMessages.map((message) => (
-                <div key={message.id} className="border border-gray-300 rounded-lg">
+                <div key={message.id} className="border rounded-lg">
                   <div className="p-4 flex flex-col gap-4 w-80">
                     <h1 className="text-2xl">
                       <span className="text-gray-500 font-bold">
@@ -105,7 +105,7 @@ const Messages = ({ currentUser }) => {
               />
               <input
                 type="text"
-                placeholder="Message Object"
+                placeholder="Object"
                 value={objectMessage}
                 onChange={(e) => setObjectMessage(e.target.value)}
                 className="border p-2 h-10 w-96"

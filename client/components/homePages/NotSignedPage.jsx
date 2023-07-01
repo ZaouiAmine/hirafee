@@ -109,7 +109,17 @@ const NotSignedPage = () => {
           </h2>
         </div>
         <div className="flex flex-wrap justify-center gap-4 ">
-          <Image alt="" src={applygig} width={"500"} />
+        <ul className="flex justify-center gap-6">
+            <li>
+            <Image alt="" src={applygig} width={"500"} />
+            </li>
+            <li>
+            <Image alt="" src={applygig} width={"500"} />
+            </li>
+            <li>
+            <Image alt="" src={applygig} width={"500"} />
+            </li>
+          </ul>  
         </div>
 
         <div className="relative mt-24 flex flex-col items-center z-10 pb-16">
