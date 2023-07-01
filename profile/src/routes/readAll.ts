@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get(
   "/api/profiles",
-  requireAuth,
+
   async (req: Request, res: Response) => {
     const profiles = await Profile.find();
 

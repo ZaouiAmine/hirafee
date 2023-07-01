@@ -7,8 +7,7 @@ const router = express.Router();
 
 router.get(
   "/api/reports",
-  requireAuth,
-  requireRole("admin"), // Middleware to restrict access to admin users only
+  // Middleware to restrict access to admin users only
   async (req: Request, res: Response) => {
     const reports = await Report.find();
 

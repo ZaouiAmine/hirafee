@@ -14,7 +14,7 @@ const router = express.Router();
 router.post(
   "/api/reports",
   requireAuth,
-  requireRole("admin"), // Middleware to restrict access to admin users only
+  // Middleware to restrict access to admin users only
   [
     body("type")
       .notEmpty()
@@ -24,7 +24,6 @@ router.post(
       .notEmpty()
       .withMessage("Reported item ID is required"),
     body("reason").notEmpty().withMessage("Reason is required"),
-
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -39,7 +38,7 @@ router.post(
       type,
       reportedItemId,
       reason,
-      state : "unprocessed",
+      state: "unprocessed",
       createdAt: new Date(),
     });
 

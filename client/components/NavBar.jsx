@@ -18,18 +18,18 @@ const NavBar = ({ links, btns }) => {
     console.log(errors);
   };
   return (
-    <nav className=" flex justify-center border-b p-2">
+    <nav className="flex justify-center py-4 px-2 absolute w-full">
       <div className="container flex justify-between items-center">
-        <Link className="flex items-center gap-2 pr-18" href="/">
-          <Image src={logo} alt="logo" width={30} />
-          <h1 className="font-bold">hirafee</h1>
+        <Link className="flex gap-2 items-center mr-20" href="/">
+          <Image src={logo} alt="logo" width={40} />
+          <h1 className="font-semibold text-secondary">Hirafee</h1>
         </Link>
 
-        <ul className=" gap-2 items-center hidden sm:flex">
+        <ul className="flex gap-6 hidden sm:flex">
           {links.map((link) => {
             return (
               <Link
-                className="text-gray-400 hover:bg-green-500 hover:text-white rounded px-4 py-2 "
+                className="text-accent hover:text-secondary text-md font-normal"
                 key={link.href}
                 href={link.href}
                 alt={link.label}

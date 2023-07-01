@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        main: "#00A84D",
+        secondary: "#3C4A3E",
+        accent: "#9FAFA1",
+      },
       width: {
         136: "34rem",
         272: "68rem",

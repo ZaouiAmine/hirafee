@@ -1,23 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const gigs = ({ currentUser }) => {
+const Gigs = ({ currentUser }) => {
   const [data, setData] = useState(null);
   const [count, setCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
+  const [showModal, setShowModal] = useState(false);
+  const [reason, setReason] = useState("");
+  const [reportedItemId, setReportedItemId] = useState(null);
+  const [reports, setReports] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/gigs");
-        console.log(response);
         const filteredData = response.data.filter(
           (gig) => gig.category === currentUser.categorie
         );
         setData(filteredData);
-        console.log(filteredData);
-        console.log(currentUser);
       } catch (error) {
         console.error(error);
       }
@@ -26,10 +27,33 @@ const gigs = ({ currentUser }) => {
     fetchData();
   }, [count]);
 
-  // Pagination
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await axios.get("/api/reports");
+        setReports(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchReports();
+  }, [count]);
+
   const indexOfLastGig = currentPage * perPage;
   const indexOfFirstGig = indexOfLastGig - perPage;
-  const currentGigs = data && data.slice(indexOfFirstGig, indexOfLastGig);
+  const currentGigs =
+    data &&
+    data.slice(indexOfFirstGig, indexOfLastGig).map((gig) => {
+      const isReported = reports.some(
+        (report) => report.reportedItemId === gig.id
+      );
+
+      return {
+        ...gig,
+        isReported,
+      };
+    });
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -38,13 +62,27 @@ const gigs = ({ currentUser }) => {
   const handleProposal = async (gigId) => {
     try {
       const gig = currentGigs.find((gig) => gig.id === gigId);
-      if (!gig) return; // Handle error if gig is not found
+      if (!gig) return;
       const updatedProposals = [...gig.proposals, currentUser.id];
       const response = await axios.put(`/api/gigs/${gigId}`, {
         proposals: updatedProposals,
       });
-      console.log(response);
-      // Refresh the data after successful request
+      setCount((prev) => prev + 1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleReport = async () => {
+    try {
+      const response = await axios.post("/api/reports", {
+        type: "gig",
+        reportedItemId,
+        reason,
+      });
+      setShowModal(false);
+      setReason("");
+      setReportedItemId(null);
       setCount((prev) => prev + 1);
     } catch (error) {
       console.error(error);
@@ -52,7 +90,7 @@ const gigs = ({ currentUser }) => {
   };
 
   return (
-    <main className="min-h-screen flex justify-center">
+    <main className="min-h-screen p-4 pt-16 flex justify-center">
       <div className="container flex flex-col items-center">
         <h1 className="text-4xl font-bold text-gray-500 m-4">Gig's List</h1>
         <div className="flex flex-col m-4 p-4 rounded-lg border w-fit">
@@ -87,24 +125,39 @@ const gigs = ({ currentUser }) => {
                       {gig.requirements}
                     </p>
                     <button
-                      className={
-                        gig.proposals.includes(currentUser.id)
+                      className={`${
+                        gig.proposals.includes(currentUser.id) || gig.isReported
                           ? "bg-gray-300 text-gray-400 px-4 py-2 rounded"
                           : "bg-blue-500 text-white px-4 py-2 rounded"
-                      }
+                      }`}
                       onClick={() => handleProposal(gig.id)}
-                      disabled={gig.proposals.includes(currentUser.id)}
+                      disabled={
+                        gig.proposals.includes(currentUser.id) || gig.isReported
+                      }
                     >
                       {gig.proposals.includes(currentUser.id)
                         ? "Already Proposed"
                         : "Propose"}
+                    </button>
+                    <button
+                      className={`${
+                        gig.isReported
+                          ? "bg-red-300 text-gray-400 px-4 py-2 rounded"
+                          : "bg-red-500 text-white px-4 py-2 rounded"
+                      } mt-2`}
+                      onClick={() => {
+                        setShowModal(true);
+                        setReportedItemId(gig.id);
+                      }}
+                      disabled={gig.isReported}
+                    >
+                      {gig.isReported ? "Reported" : "Report"}
                     </button>
                   </div>
                 </div>
               ))}
           </div>
 
-          {/* Pagination Numbers */}
           <div className="flex justify-center mt-4">
             {data &&
               Array.from({ length: Math.ceil(data.length / perPage) }).map(
@@ -125,8 +178,39 @@ const gigs = ({ currentUser }) => {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div
+            className="bg-white w-full lg:w-1/2
+           p-4 rounded-lg"
+          >
+            <h1 className="text-2xl font-bold mb-4">Report Gig</h1>
+            <textarea
+              className="w-full p-2 mb-4 border"
+              placeholder="Enter reason for reporting..."
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+            ></textarea>
+            <div className="flex justify-end">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                onClick={handleReport}
+              >
+                Submit
+              </button>
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
 
-export default gigs;
+export default Gigs;

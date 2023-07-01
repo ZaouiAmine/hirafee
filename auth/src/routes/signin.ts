@@ -43,6 +43,7 @@ router.post(
         location: existingUser.location,
         biography: existingUser.biography,
         categorie: existingUser.categorie,
+        banned: existingUser.banned,
       },
       process.env.JWT_KEY!
     );
