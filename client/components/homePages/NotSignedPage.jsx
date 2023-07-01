@@ -1,11 +1,4 @@
 import Link from "next/link";
-<<<<<<< HEAD
-import Image from 'next/image';
-import paintre from '../homePages/maçon.jpg';
-import maçon from '../homePages/paintre.jpg';
-import plombier from '../homePages/plombier.jpg';
-
-=======
 import Image from "next/image";
 import hero from "@/public/heroBg.png";
 import dots from "@/public/landingpage/dots.png";
@@ -18,7 +11,6 @@ import gig3 from "@/public/landingpage/steps/gig3.png";
 import gig4 from "@/public/landingpage/steps/gig4.png";
 import applygig from "@/public/landingpage/steps/applygig.png";
 import handshake from "@/public/landingpage/steps/handshake.png";
->>>>>>> 4811358d534c1d0545edfa7b6161d7c91cb68854
 
 const NotSignedPage = () => {
   // useEffect(() => {
@@ -34,25 +26,6 @@ const NotSignedPage = () => {
   //     }
   //   };
 
-<<<<<<< HEAD
-            <div className="flex justify-center items-center">
-        <div className="flex">
-          <Image src={paintre} alt="Image 1" width={200} height={200} className="mx-2" />
-          <Image src={plombier} alt="Image 2" width={200} height={200} className="mx-2" />
-          <Image src={maçon} alt="Image 3" width={200} height={200} className="mx-2" />
-          
-        </div>
-      </div>
-
-
-      <Link
-        href="/auth/signup"
-        className="flex items-center gap-2 btn m-6  mb-40 text-center text-white bg-green-500 hover:text-green-500 hover:bg-white py-2 px-4 rounded-md border border-green-500"
-      >
-        Start now
-        {/* <FaArrowAltCircleRight /> */}
-      </Link>
-=======
   //   fetchUsers();
   // }, []);
   return (
@@ -148,7 +121,6 @@ const NotSignedPage = () => {
       <section className="container flex p-4 py-16 h-128 bg-accent">
         categories
       </section>
->>>>>>> 4811358d534c1d0545edfa7b6161d7c91cb68854
     </main>
   );
 };
