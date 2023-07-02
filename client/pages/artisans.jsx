@@ -48,7 +48,7 @@ const artisan = () => {
         </div>
         <div className="w-full flex flex-wrap gap-4 justify-center">
           {filteredUsers.map((user) => (
-            <Profile key={user.id} user={user} onClick={() => onClick(user)} />
+            <Profile key={user.id} user={user} />
           ))}
         </div>
       </div>

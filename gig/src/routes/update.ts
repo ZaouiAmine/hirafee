@@ -46,7 +46,10 @@ router.put(
     if (banned !== undefined) gig.banned = banned;
     if (clientId) gig.clientId = clientId;
     if (proposals) gig.proposals = proposals;
-    if (takenBy) gig.takenBy = takenBy;
+    if (takenBy == null) gig.takenBy = "";
+    if (takenBy) {
+      (gig.takenBy = takenBy), console.log("updated");
+    }
 
     await gig.save();
 
