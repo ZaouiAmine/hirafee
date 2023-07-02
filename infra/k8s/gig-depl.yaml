@@ -16,6 +16,14 @@ spec:
         - name: gig
           image: malakboudaa/gig
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: hirafee
             - name: MONGO_URI
               value: "mongodb://gig-mongo-srv:27017/gig"
             - name: JWT_KEY

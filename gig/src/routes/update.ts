@@ -6,6 +6,8 @@ import {
   requireRole,
 } from "@hirafee-platforme/common";
 import { Gig } from "../models/gig";
+import { natsWrapper } from "../nats-wrapper";
+import { GigUpdatedPublisher } from "../events/publishers/gig-updated-publisher";
 
 const router = express.Router();
 
@@ -47,6 +49,21 @@ router.put(
     if (takenBy) gig.takenBy = takenBy;
 
     await gig.save();
+
+    //put our publisher 
+    // with the getter on natswrapper 
+    new GigUpdatedPublisher(natsWrapper.client).publish({
+      title: gig.title,
+      description: gig.description,
+      budget: gig.budget,
+      location: gig.location,
+      category: gig.category,
+      requirements: gig.requirements,
+      banned: gig.banned
+
+     });
+
+
 
     res.send(gig);
   }

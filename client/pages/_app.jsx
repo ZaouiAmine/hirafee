@@ -23,6 +23,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
     { label: "Gigs", href: "/client/gigs" },
     { label: "Artisans", href: "/client/artisans" },
     { label: "Messages", href: "/client/messages" },
+    { label: "Payment", href: "/client/payments" },
   ];
   let artisanLinks = [
     { label: "Gigs", href: "/artisan/gigs" },

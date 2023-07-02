@@ -8,6 +8,8 @@ const stan = nats.connect('hirafee', 'abc', {
 
 stan.on('connect', async () => {
   console.log('Publisher connected to NATS');
+
+
   const publisher = new UserCreatedPublisher(stan);
 try {
 
@@ -24,6 +26,7 @@ try {
 } catch (err) {
   console.error(err);
 }
+
 
 
 

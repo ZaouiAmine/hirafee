@@ -1,6 +1,10 @@
 import nats from 'node-nats-streaming';
 import { randomBytes } from 'crypto';
 import { UserCreatedListener } from './events/user-created-listener';
+import { GigCreatedListener } from './events/gig-created-listener';
+import { GigUpdatedListener } from './events/gig-updated-listener';
+
+
 console.clear();
 
 //connect to NATS (stan refers to client)
@@ -18,6 +22,10 @@ stan.on('close', () =>{
    });
 
    new UserCreatedListener(stan).listen();
+   new GigCreatedListener(stan).listen();
+   new GigUpdatedListener(stan).listen();
+
+
 });
 
 //add two handlers to handle the close of the process

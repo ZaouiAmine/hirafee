@@ -9,6 +9,8 @@ import {
 import { body } from "express-validator";
 import { Gig } from "../models/gig";
 import mongoose from "mongoose";
+import { natsWrapper } from "../nats-wrapper";
+import { GigCreatedPublisher } from "../events/publishers/gig-created-publisher";
 
 const router = express.Router();
 
@@ -53,6 +55,19 @@ router.post(
       banned: false,
     });
     await gigs.save();
+
+        //put our publisher 
+    // with the getter on natswrapper 
+    new GigCreatedPublisher(natsWrapper.client).publish({
+      title: gigs.title,
+      description: gigs.description,
+      budget: gigs.budget,
+      location: gigs.location,
+      category: gigs.category,
+      requirements: gigs.requirements,
+      banned: gigs.banned
+
+     });
     res.status(201).send(gigs);
   }
 );

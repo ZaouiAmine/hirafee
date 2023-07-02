@@ -1,5 +1,6 @@
 export enum Subjects {
     UserCreated = 'user:created',
-    ProfileUpdated = 'profile:updated'
+    GigCreated = 'gig:created',
+    GigUpdated = 'gig:updated'
 }
 
