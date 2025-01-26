@@ -45,7 +45,7 @@ Once the project is running, clients can navigate to the web app and browse craf
 
 ## Contributors
 
-- Your Name (GitHub: ZaouiAmine)
+- Zaoui Mohammed Amine (GitHub: ZaouiAmine)
 - Malak Boudaa (GitHub: malakboudaa)
 
 ## License
